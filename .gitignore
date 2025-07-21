@@ -1,0 +1,64 @@
+# Секретные файлы
+.env
+.env.*
+secrets/
+config_secret.py
+*.key
+*.pem
+
+# Виртуальное окружение
+venv/
+.env/
+ENV/
+venv.bak/
+
+# Файлы Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Данные и логи
+data/
+*.db
+*.sqlite
+*.log
+logs/
+
+# IDE и редакторы
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+*.orig
+*.bak
+
+# Тестовые данные
+test_data/
+*.test
+
+# Документация
+docs/_build/
