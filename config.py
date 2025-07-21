@@ -9,7 +9,6 @@ class Config:
     if not BOT_TOKEN:
         raise ValueError("Токен бота не найден в .env файле!")
     
-    # Обновляем пути для работы в Docker
     DATA_DIR = Path('/app/data') if 'DOCKER' in os.environ else Path(__file__).parent / 'data'
     SCHEDULE_FILE = DATA_DIR / 'расписание.xlsx'
     ALLOWED_USERS_FILE = DATA_DIR / 'allowed_users.txt'
