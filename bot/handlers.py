@@ -91,7 +91,7 @@ def show_statistics(bot, chat_id):
 
 def request_auth(bot, chat_id):
     msg = bot.send_message(chat_id, "🔒 Для доступа к боту требуется авторизация.\n\n"
-                                  "Введите ваши фамилию и имя (как в файле allowed_users.txt):")
+                                  "Введите фамилию и имя:")
     bot.register_next_step_handler(msg, lambda m: process_auth_step(bot, m))
 
 def process_auth_step(bot, message):
@@ -156,7 +156,7 @@ def show_schedule(bot, chat_id, date):
 def request_date(bot, chat_id):
     current_year = datetime.now().year
     msg = bot.send_message(chat_id, 
-                         f"📅 Введите дату в формате ДД.ММ (например, 25.07) - будет использован {current_year} год:",
+                         f"📅 Введите дату в формате ДД.ММ (например, 25.07):",
                          parse_mode='HTML')
     bot.register_next_step_handler(msg, lambda m: process_date_input(bot, m))
 
