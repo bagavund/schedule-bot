@@ -3,14 +3,11 @@ from pathlib import Path
 import os
 from bot.services.storage import load_allowed_users
 
-# Путь к файлу состояний
 USER_STATES_DIR = Path(__file__).parent.parent / 'data'
 USER_STATES_FILE = USER_STATES_DIR / 'user_states.json'
 
-# Создаем папку, если её нет
 os.makedirs(USER_STATES_DIR, exist_ok=True)
 
-# Глобальная переменная для хранения состояний
 user_states = {}
 
 def load_user_states():
@@ -37,7 +34,6 @@ def save_user_states():
     except PermissionError as e:
         print(f"Ошибка сохранения user_states: {e}")
 
-# Остальные функции остаются без изменений
 def is_authorized(chat_id):
     return str(chat_id) in user_states
 
@@ -61,5 +57,4 @@ def deauthorize_user(chat_id):
         del user_states[str(chat_id)]
         save_user_states()
 
-# Загружаем состояния при импорте модуля
 load_user_states()

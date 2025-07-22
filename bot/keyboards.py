@@ -13,6 +13,6 @@ def create_main_menu():
 def create_test_menu():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add(types.KeyboardButton('Статистика'))
-    markup.add(types.KeyboardButton('Сменить пользователя'))  # Новая кнопка
+    markup.add(types.KeyboardButton('Сменить пользователя'))
     markup.add(types.KeyboardButton('Назад в меню'))
     return markup
