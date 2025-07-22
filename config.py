@@ -5,19 +5,15 @@ from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent / '.env')
 
 class Config:
-    # 1. Сначала определяем корневую директорию
     PROJECT_ROOT = Path(__file__).parent
     
-    # 2. Затем определяем DATA_DIR
     DATA_DIR = PROJECT_ROOT / 'data'
-    DATA_DIR.mkdir(exist_ok=True)  # Создаем папку, если ее нет
-    
-    # 3. Теперь можно определять файлы
+    DATA_DIR.mkdir(exist_ok=True) 
+
     SCHEDULE_FILE = DATA_DIR / 'расписание.xlsx'
     ALLOWED_USERS_FILE = DATA_DIR / 'allowed_users.txt'
     USER_STATES_FILE = DATA_DIR / 'user_states.json'
     
-    # 4. Затем токен бота (так как он может использовать предыдущие определения)
     BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
     if not BOT_TOKEN:
         raise ValueError("Токен бота не найден в .env файле!")
