@@ -26,7 +26,7 @@ pip install -r requirements.txt
 
 ```bash
 mkdir allowed_users.txt
-mkdir расписание.xlsx
+touch расписание.xlsx
 touch .env
 ```
 
