@@ -22,6 +22,6 @@ def test_config_loads():
     
     try:
         from config import Config  # Импорт из корня
-        assert hasattr(Config, 'BOT_TOKEN')
+        assert hasattr(Config, 'TELEGRAM_TOKEN')
     except ImportError as e:
         pytest.fail(f"Config import failed: {e}")
