@@ -15,15 +15,15 @@
     "authorized": true,
     "name": "Демин Владимир"
   },
-  "421536952": {
-    "authorized": true,
-    "name": "Комлев Владислав"
-  },
   "923659606": {
     "authorized": true,
     "name": "Полунин Вадим"
   },
   "923861404": {
+    "authorized": true,
+    "name": "Комлев Владислав"
+  },
+  "421536952": {
     "authorized": true,
     "name": "Комлев Владислав"
   }
