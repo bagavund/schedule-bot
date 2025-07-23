@@ -33,21 +33,3 @@ jobs:
       run: |
         pip install flake8
         flake8 bot/ --count --show-source --statistics --max-line-length=120
-
-  # Только нотификации (без деплоя)
-  notify:
-    name: Notify Team
-    needs: test
-    if: always()
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Send Slack notification
-      uses: slackapi/slack-github-action@v1
-      with:
-        slack-message: |
-          *Tests for develop branch*: ${{ job.status }}
-          Branch: ${{ github.ref }}
-          Commit: ${{ github.sha }}
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
