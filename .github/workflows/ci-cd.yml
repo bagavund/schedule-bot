@@ -13,7 +13,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"  # или другая версия
+          python-version: "3.13.5"  # или другая версия
 
       - name: Install Black
         run: pip install black
