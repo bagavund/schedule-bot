@@ -1,25 +1,53 @@
-name: Run Black
+name: CI/CD Pipeline
 
-on: [push, pull_request]  # Триггер на push или PR
+on:
+  push:
+    branches: [develop, master]
 
 jobs:
-  format:
+  # Этот job запускается ТОЛЬКО для develop
+  code-check:
+    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.13.5"  # или другая версия
+          python-version: '3.13.5'
+          
+      - name: Run Black 
+        run: |
+          pip install black==23.12.0
+          black .
 
-      - name: Install Black
-        run: pip install black
+  # Этот job запускается ТОЛЬКО для master
+  production-deploy:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs: code-check  
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
         
-      - name: make Black
-        run: black .
+      - name: Add SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_HOST }}
+          
+      - name: Stop service
+        run: ssh root@185.185.71.5 "systemctl stop schedule-bot.service"
         
-      - name: Run Black
-        run: black . --check 
+      - name: Sync files
+        run: rsync -avz --delete --exclude='venv' ./ root@185.185.71.5:/root/schedule-bot
+
+      - name: Install dependencies
+        run: ssh root@185.185.71.5 "cd /root/schedule-bot && source venv/bin/activate && pip install -r requirements.txt"
+        
+      - name: Start service
+        run: ssh root@185.185.71.5 "systemctl start schedule-bot.service"
