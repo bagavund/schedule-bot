@@ -1,13 +1,21 @@
 import pandas as pd
 from datetime import datetime, timedelta
-from bot.services import auth, schedule, storage
 from bot.keyboards import create_main_menu, create_schedule_submenu, create_my_shifts_submenu, create_tools_submenu
-
+from bot.services import auth, schedule, storage
+from bot.services.user_logging import user_activity_logger
 
 def handle_message(bot, message):
-    """Обрабатывает входящие сообщения и перенаправляет на соответствующие функции."""
     chat_id = message.chat.id
     text = message.text.lower()
+    user_name = auth.get_user_name(chat_id) or "Unauthorized"
+    
+    # Логируем все входящие сообщения (базовый уровень)
+    user_activity_logger.log_activity(
+        user_id=chat_id,
+        username=user_name,
+        action="Message received",
+        details=f"Text: {text[:100]}"
+    )
 
     if text == "сменить пользователя":
         auth.deauthorize_user(chat_id)
@@ -20,6 +28,13 @@ def handle_message(bot, message):
 
     # Обработка главного меню
     if text == "📅 график смен":
+        # Детальное логирование нажатия кнопки графика
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule menu opened",
+            details="Main schedule button clicked"
+        )
         bot.send_message(chat_id, "Выберите вариант:", reply_markup=create_schedule_submenu())
     
     elif text == "👤 мои смены":
@@ -30,12 +45,39 @@ def handle_message(bot, message):
     
     # Обработка подменю графика
     elif text == "сегодня":
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule viewed",
+            details="Today's schedule requested"
+        )
         show_schedule(bot, chat_id, datetime.now().date())
+        
     elif text == "завтра":
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule viewed", 
+            details="Tomorrow's schedule requested"
+        )
         show_schedule(bot, chat_id, datetime.now().date() + timedelta(days=1))
+        
     elif text == "следующая смена":
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule viewed",
+            details="Next shift requested"
+        )
         show_next_shift(bot, chat_id)
+        
     elif text == "выбрать дату":
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule date selection started",
+            details="Date picker initiated"
+        )
         request_date(bot, chat_id)
     
     # Обработка подменю "Мои смены"
@@ -240,11 +282,20 @@ def request_date(bot, chat_id):
 
 
 def process_date_input(bot, message):
-    """Обрабатывает введенную пользователем дату."""
     chat_id = message.chat.id
+    user_name = auth.get_user_name(chat_id)
+
     try:
         date_str = f"{message.text}.{datetime.now().year}"
         date_obj = datetime.strptime(date_str, "%d.%m.%Y").date()
+
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule viewed",
+            details=f"Custom date selected: {date_str}"
+        )
+
         show_schedule(bot, chat_id, date_obj)
     except ValueError:
         bot.send_message(
