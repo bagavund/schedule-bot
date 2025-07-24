@@ -19,10 +19,9 @@ SHIFT_DURATIONS = {
     "Руководитель": 9,
 }
 
-
 def format_schedule(row):
-    """Форматирует информацию о сменах в читаемое сообщение с псевдографикой"""
-    date_str = row["Дата"].strftime("%d.%m.%Y")
+    """Форматирует информацию о сменах"""
+    date_str = row["Дата"].strftime("%d.%m")  # Убрали год
     weekday_en = row["Дата"].strftime("%A")
     weekday_ru = WEEKDAYS.get(weekday_en, weekday_en)
     

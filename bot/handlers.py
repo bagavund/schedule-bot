@@ -1,7 +1,7 @@
 import pandas as pd
 from datetime import datetime, timedelta
 from bot.services import auth, schedule, storage
-from bot.keyboards import create_main_menu, create_test_menu
+from bot.keyboards import create_main_menu, create_schedule_submenu, create_my_shifts_submenu, create_tools_submenu
 
 
 def handle_message(bot, message):
@@ -18,27 +18,77 @@ def handle_message(bot, message):
         request_auth(bot, chat_id)
         return
 
-    if text == "мои смены":
-        show_user_shifts(bot, chat_id)
+    # Обработка главного меню
+    if text == "📅 график смен":
+        bot.send_message(chat_id, "Выберите вариант:", reply_markup=create_schedule_submenu())
+    
+    elif text == "👤 мои смены":
+        bot.send_message(chat_id, "Ваши смены:", reply_markup=create_my_shifts_submenu())
+    
+    elif text == "🛠 инструменты":
+        bot.send_message(chat_id, "Инструменты:", reply_markup=create_tools_submenu())
+    
+    # Обработка подменю графика
     elif text == "сегодня":
         show_schedule(bot, chat_id, datetime.now().date())
     elif text == "завтра":
         show_schedule(bot, chat_id, datetime.now().date() + timedelta(days=1))
+    elif text == "следующая смена":
+        show_next_shift(bot, chat_id)
     elif text == "выбрать дату":
         request_date(bot, chat_id)
-    elif text == "тестовые функции":
-        bot.send_message(chat_id, "Выберите действие:", reply_markup=create_test_menu())
-    elif text == "статистика":
+    
+    # Обработка подменю "Мои смены"
+    elif text == "все мои смены":
+        show_user_shifts(bot, chat_id)
+    elif text == "моя статистика":
         show_statistics(bot, chat_id)
-    elif text == "назад в меню":
+    
+    # Обработка кнопки "Назад"
+    elif text == "🔙 назад":
         show_main_menu(bot, chat_id)
+    
+    # Старая логика (для совместимости)
     else:
-        try:
-            date_str = f"{text}.{datetime.now().year}"
-            date_obj = datetime.strptime(date_str, "%d.%m.%Y").date()
-            show_schedule(bot, chat_id, date_obj)
-        except ValueError:
-            show_main_menu(bot, chat_id)
+        handle_legacy_commands(bot, message)
+        
+def show_next_shift(bot, chat_id):
+    """Показывает следующую смену пользователя"""
+    user_name = auth.get_user_name(chat_id)
+    df = storage.load_schedule()
+    
+    if df is None:
+        return bot.send_message(chat_id, "⚠️ Ошибка загрузки расписания")
+
+    shifts = schedule.get_user_shifts(df, user_name)
+    
+    if shifts.empty:
+        return bot.send_message(chat_id, "🎉 У вас нет запланированных смен!")
+    
+    next_shift = shifts.iloc[0]
+    date_str = next_shift["Дата"].strftime("%d.%m")  # Формат без года
+    weekday_ru = schedule.WEEKDAYS.get(next_shift["Дата"].strftime("%A"), "?")  # Добавляем определение weekday_ru
+    
+    response = (
+        f"<b>⬇️ Ваша следующая смена:</b>\n"
+        f"<pre>┌─────────────────────────────\n"
+        f"│ 📅 {date_str} ({weekday_ru})\n"
+        f"│ 👨‍💻 Основная: {next_shift.get('Основа', '—')}\n"
+        f"│ 🌙 Ночь: {next_shift.get('Ночь', '—')}\n"
+        f"└─────────────────────────────</pre>"
+    )
+    
+    bot.send_message(chat_id, response, parse_mode="HTML")
+
+def handle_legacy_commands(bot, message):
+    """Обработка старых команд для обратной совместимости"""
+    chat_id = message.chat.id
+    text = message.text.lower()
+    
+    if text == "мои смены":
+        show_user_shifts(bot, chat_id)
+    elif text == "тестовые функции":
+        bot.send_message(chat_id, "Инструменты:", reply_markup=create_tools_submenu())
 
 
 def show_statistics(bot, chat_id):
@@ -119,7 +169,6 @@ def process_auth_step(bot, message):
     if not success:
         request_auth(bot, chat_id)
 
-
 def show_user_shifts(bot, chat_id):
     """Показывает смены пользователя в фирменном стиле"""
     user_name = auth.get_user_name(chat_id)
@@ -139,7 +188,7 @@ def show_user_shifts(bot, chat_id):
     ]
     
     for _, row in shifts.iterrows():
-        date_str = row["Дата"].strftime("%d.%m.%Y")
+        date_str = row["Дата"].strftime("%d.%m")  # Убрали .%Y из формата даты
         weekday_ru = schedule.WEEKDAYS.get(row["Дата"].strftime("%A"), "")
         
         if row["Основа"] == user_name:
@@ -156,7 +205,6 @@ def show_user_shifts(bot, chat_id):
         "\n".join(message),
         parse_mode="HTML"
     )
-
 
 def show_schedule(bot, chat_id, date):
     """Показывает расписание на указанную дату."""
