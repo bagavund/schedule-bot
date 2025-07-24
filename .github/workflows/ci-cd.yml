@@ -1,33 +1,42 @@
-name: Lint with flake8
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [develop]
+    branches: [develop]  # Тесты при пуше в develop
   pull_request:
-    branches: [develop]
+    branches: [master]   # Проверка PR в master
+  push:
+    branches: [master]   # Деплой при пуше в master
 
 jobs:
-  lint:
+  test:
+    # Запускается ТОЛЬКО для develop
+    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
-    timeout-minutes: 5  # Линтинг обычно быстрый
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
-          python-version: '3.13.5'
-            
-      - name: Install black
-        run: pip install black
+          python-version: "3.13.5"
+      - run: pip install -r requirements.txt black flake8
+      - run: black .
+      - run: flake8
 
-      - name: Run black
-        run: black .
-      
-      - name: Install flake8
-        run: pip install flake8
-
-      - name: Run flake8
-        run: flake8 . 
+  deploy:
+    # Запускается ТОЛЬКО для master
+    if: github.ref == 'refs/heads/master'
+    needs: test  
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Deploy to VM
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /home/ubuntu/schedule-bot
+            git pull origin master
+            pip install -r requirements.txt
+            sudo systemctl restart schedule-bot.service

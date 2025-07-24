@@ -39,17 +39,6 @@ def format_schedule(row):
 
 
 def get_user_shifts(df, user_name, only_future=True):
-    """
-    Возвращает смены для указанного пользователя.
-
-    Args:
-        df: DataFrame с расписанием
-        user_name: Имя пользователя
-        only_future: Если True, возвращает только будущие смены
-
-    Returns:
-        Отсортированный DataFrame смен пользователя
-    """
     today = datetime.now().date()
 
     mask = (
@@ -67,15 +56,5 @@ def get_user_shifts(df, user_name, only_future=True):
 
 
 def get_date_schedule(df, date):
-    """
-    Возвращает расписание на указанную дату.
-
-    Args:
-        df: DataFrame с расписанием
-        date: Дата для поиска
-
-    Returns:
-        Строку с расписанием или None если нет данных
-    """
     schedule = df[df["Дата"] == date]
     return schedule.iloc[0] if not schedule.empty else None
