@@ -10,6 +10,7 @@ class Config:
 
     DATA_DIR = PROJECT_ROOT / "data"
     DATA_DIR.mkdir(exist_ok=True)
+    LOGS_DIR = DATA_DIR / "logs"
 
     SCHEDULE_FILE = DATA_DIR / "расписание.xlsx"
     ALLOWED_USERS_FILE = DATA_DIR / "allowed_users.txt"
