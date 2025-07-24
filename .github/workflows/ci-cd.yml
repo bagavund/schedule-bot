@@ -1,0 +1,24 @@
+name: Run Black
+
+on: [push, pull_request]  # Триггер на push или PR
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.13.5"  # или другая версия
+
+      - name: Install Black
+        run: pip install black
+
+      - name: Run Black
+        run: black . --check  # Проверка без изменений
+        # Или так, чтобы автоматически исправить:
+        # run: black .
