@@ -72,33 +72,29 @@ def show_statistics(bot, chat_id):
         if pd.notna(row["Резерв"]) and row["Резерв"] == user_name:
             stats["Резерв"]["hours"] += 9
             stats["Резерв"]["count"] += 1
+        if pd.notna(row["Руководитель"]) and row["Руководитель"] == user_name:
+            stats["Руководитель"]["hours"] += 9
+            stats["Руководитель"]["count"] += 1
 
     total_hours = sum(v["hours"] for v in stats.values())
 
     if total_hours == 0:
-        bot.send_message(
-            chat_id,
-            "📭 У вас нет данных по отработанным сменам",
-            reply_markup=create_test_menu(),
-        )
+        bot.send_message(chat_id, "📭 У вас нет данных по отработанным сменам")
         return
 
     response = (
-        f"📊 <b>Статистика {user_name}</b>\n\n"
-        f"🕒 Всего часов: <b>{total_hours}</b>\n\n"
-        f"🔹 Основные смены: {stats['Основная']['hours']} ч "
-        f"({stats['Основная']['count']} смен)\n"
-        f"🌙 Ночные смены: {stats['Ночь']['hours']} ч "
-        f"({stats['Ночь']['count']} смен)\n"
-        f"🖥 Администрирование: {stats['Администрирование']['hours']} ч "
-        f"({stats['Администрирование']['count']} смен)\n"
-        f"🔄 Резерв: {stats['Резерв']['hours']} ч "
-        f"({stats['Резерв']['count']} смен)"
+        f"<b>📊 Статистика {user_name}</b>\n"
+        "<pre>┌─────────────────────────────\n"
+        f"│ <b>🕒 Всего часов</b>:     <b>{total_hours}</b>\n"
+        "├─────────────────────────────\n"
+        f"│ <b>🔹 Основные смены</b>:  {stats['Основная']['hours']} ч ({stats['Основная']['count']} смен)\n"
+        f"│ <b>🌙 Ночные смены</b>:    {stats['Ночь']['hours']} ч ({stats['Ночь']['count']} смен)\n"
+        f"│ <b>🖥 Администрирование</b>: {stats['Администрирование']['hours']} ч ({stats['Администрирование']['count']} смен)\n"
+        f"│ <b>🔄 Резерв</b>:          {stats['Резерв']['hours']} ч ({stats['Резерв']['count']} смен)\n"
+        "└─────────────────────────────</pre>"
     )
 
-    bot.send_message(
-        chat_id, response, parse_mode="HTML", reply_markup=create_test_menu()
-    )
+    bot.send_message(chat_id, response, parse_mode="HTML")
 
 
 def request_auth(bot, chat_id):
@@ -125,38 +121,41 @@ def process_auth_step(bot, message):
 
 
 def show_user_shifts(bot, chat_id):
-    """Показывает пользователю его запланированные смены."""
+    """Показывает смены пользователя в фирменном стиле"""
     user_name = auth.get_user_name(chat_id)
     df = storage.load_schedule()
-
+    
     if df is None:
-        bot.send_message(chat_id, "⚠️ Ошибка загрузки расписания")
-        return
+        return bot.send_message(chat_id, "⚠️ Ошибка загрузки расписания", parse_mode="HTML")
 
     shifts = schedule.get_user_shifts(df, user_name)
-
+    
     if shifts.empty:
-        bot.send_message(chat_id, "✅ У вас нет запланированных смен")
-        return
+        return bot.send_message(chat_id, "🎉 У вас нет запланированных смен!", parse_mode="HTML")
 
-    response = "📅 <b>Ваши ближайшие смены:</b>\n\n"
-
+    message = [
+        "<b>📅 Ваши ближайшие смены:</b>",
+        "<pre>┌─────────────────────────────"
+    ]
+    
     for _, row in shifts.iterrows():
         date_str = row["Дата"].strftime("%d.%m.%Y")
-        weekday_en = row["Дата"].strftime("%A")
-        weekday_ru = schedule.WEEKDAYS.get(weekday_en, weekday_en)
-
-        shift_types = []
+        weekday_ru = schedule.WEEKDAYS.get(row["Дата"].strftime("%A"), "")
+        
         if row["Основа"] == user_name:
-            shift_types.append("Основная")
+            message.append(f"│ <b>👨‍💻 Основная</b>:     {date_str} ({weekday_ru})")
         if pd.notna(row["Администрирование"]) and row["Администрирование"] == user_name:
-            shift_types.append("Администрирование")
+            message.append(f"│ <b>💻 Админ</b>:        {date_str} ({weekday_ru})")
         if row["Ночь"] == user_name:
-            shift_types.append("Ночная")
-
-        response += f"▪️ {date_str} ({weekday_ru}): {', '.join(shift_types)}\n"
-
-    bot.send_message(chat_id, response, parse_mode="HTML")
+            message.append(f"│ <b>🌙 Ночь</b>:         {date_str} ({weekday_ru})")
+    
+    message.append("└─────────────────────────────</pre>")
+    
+    bot.send_message(
+        chat_id,
+        "\n".join(message),
+        parse_mode="HTML"
+    )
 
 
 def show_schedule(bot, chat_id, date):
