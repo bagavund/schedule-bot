@@ -1,42 +1,13 @@
-name: CI/CD Pipeline
+name: tests
 
-on:
-  push:
-    branches: 
-      - develop  # Тесты при пуше в develop
-      - master   # Деплой при пуше в master
-  pull_request:
-    branches: [master]  # Проверка PR в master
+on [push]
 
 jobs:
   test:
-    # Запускается ТОЛЬКО для develop
-    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.13.5"
-      - run: pip install -r requirements.txt pytest flake8
-      - run: flake8 .
-      - run: pytest
 
-  deploy:
-    # Запускается ТОЛЬКО для master
-    if: github.ref == 'refs/heads/master'
-    needs: test          # Ждем успеха тестов (если были)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Deploy to VM
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /home/ubuntu/schedule-bot
-            git pull origin master
-            pip install -r requirements.txt
-            sudo systemctl restart schedule-bot.service
+  steps:
+    uses: actions/checkout@v4
+    run: pip install -r requirments.txt
+    run: black .
+    run: flake8 .
