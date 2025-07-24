@@ -1,34 +1,12 @@
 name: tests
 
-on [push]
+on: [push]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
-<<<<<<< HEAD
-  steps:
-    uses: actions/checkout@v4
-    run: pip install -r requirments.txt
-    run: black .
-    run: flake8 .
-=======
-  deploy:
-    # Запускается ТОЛЬКО для master
-    if: github.ref == 'refs/heads/master'
-    needs: test          # Ждем успеха тестов (если были)
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Deploy to VM
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /home/ubuntu/schedule-bot
-            git pull origin master
-            pip install -r requirements.txt
-            sudo systemctl restart schedule-bot.service
->>>>>>> 51c769e1554b6913d252bbb4b2b54338a72050c8
+      - uses: actions/checkout@v4
+      - run: pip install -r requirements.txt
+      - run: black .
+      - run: flake8 .
