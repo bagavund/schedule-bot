@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from bot.services import auth, schedule, storage
 from bot.keyboards import create_main_menu, create_test_menu
 
+
 def handle_message(bot, message):
     """Обрабатывает входящие сообщения и перенаправляет на соответствующие функции."""
     chat_id = message.chat.id
