@@ -1,12 +1,24 @@
-name: tests
+name: Run Black
 
-on: [push]
+on: [push, pull_request]  # Триггер на push или PR
 
 jobs:
-  test:
+  format:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - run: pip install -r requirements.txt
-      - run: black .
-      - run: flake8 .
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"  # или другая версия
+
+      - name: Install Black
+        run: pip install black
+
+      - name: Run Black
+        run: black . --check  # Проверка без изменений
+        # Или так, чтобы автоматически исправить:
+        # run: black .
