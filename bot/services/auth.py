@@ -60,7 +60,6 @@ def authorize_user(chat_id, full_name):
         save_user_states()
         return True, f"✅ Авторизация успешна, {full_name}!"
     return False, "❌ Неверные данные. Попробуйте ещё раз:"
-    
 
 
 def deauthorize_user(chat_id):
