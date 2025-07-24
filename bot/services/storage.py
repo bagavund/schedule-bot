@@ -10,6 +10,8 @@ def load_schedule():
         df["Дата"] = pd.to_datetime(df["Дата"]).dt.date
         if "Резерв" not in df.columns:
             df["Резерв"] = pd.NA
+        if "Руководитель" not in df.columns:
+            df["Руководитель"] = pd.NA
         return df
     except Exception as e:
         print(f"Ошибка загрузки файла расписания: {e}")

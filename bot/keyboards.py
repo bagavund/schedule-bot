@@ -1,20 +1,35 @@
 from telebot import types
 
-
 def create_main_menu():
-    markup = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    btn1 = types.KeyboardButton("Мои смены")
-    btn2 = types.KeyboardButton("Сегодня")
-    btn3 = types.KeyboardButton("Завтра")
-    btn4 = types.KeyboardButton("Выбрать дату")
-    btn5 = types.KeyboardButton("Тестовые функции")
-    markup.add(btn1, btn2, btn3, btn4, btn5)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    btn_schedule = types.KeyboardButton("📅 График смен")
+    btn_my_shifts = types.KeyboardButton("👤 Мои смены")
+    btn_tools = types.KeyboardButton("🛠 Инструменты")
+    markup.add(btn_schedule, btn_my_shifts, btn_tools)
     return markup
 
+def create_schedule_submenu():
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    btn_today = types.KeyboardButton("Сегодня")
+    btn_tomorrow = types.KeyboardButton("Завтра")
+    btn_next_shift = types.KeyboardButton("Следующая смена")
+    btn_select_date = types.KeyboardButton("Выбрать дату")
+    btn_back = types.KeyboardButton("🔙 Назад")
+    markup.add(btn_today, btn_tomorrow, btn_next_shift, btn_select_date, btn_back)
+    return markup
 
-def create_test_menu():
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.add(types.KeyboardButton("Статистика"))
-    markup.add(types.KeyboardButton("Сменить пользователя"))
-    markup.add(types.KeyboardButton("Назад в меню"))
+def create_my_shifts_submenu():
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    btn_all_shifts = types.KeyboardButton("Все мои смены")
+    btn_stats = types.KeyboardButton("Моя статистика")
+    btn_back = types.KeyboardButton("🔙 Назад")
+    markup.add(btn_all_shifts, btn_stats, btn_back)
+    return markup
+
+def create_tools_submenu():
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
+    btn_switch_user = types.KeyboardButton("Сменить пользователя")
+    btn_admin_tools = types.KeyboardButton("Админ-панель")
+    btn_back = types.KeyboardButton("🔙 Назад")
+    markup.add(btn_switch_user, btn_admin_tools, btn_back)
     return markup

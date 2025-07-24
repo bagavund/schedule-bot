@@ -1,13 +1,21 @@
 import pandas as pd
 from datetime import datetime, timedelta
+from bot.keyboards import create_main_menu, create_schedule_submenu, create_my_shifts_submenu, create_tools_submenu
 from bot.services import auth, schedule, storage
-from bot.keyboards import create_main_menu, create_test_menu
-
+from bot.services.user_logging import user_activity_logger
 
 def handle_message(bot, message):
-    """Обрабатывает входящие сообщения и перенаправляет на соответствующие функции."""
     chat_id = message.chat.id
     text = message.text.lower()
+    user_name = auth.get_user_name(chat_id) or "Unauthorized"
+    
+    # Логируем все входящие сообщения (базовый уровень)
+    user_activity_logger.log_activity(
+        user_id=chat_id,
+        username=user_name,
+        action="Message received",
+        details=f"Text: {text[:100]}"
+    )
 
     if text == "сменить пользователя":
         auth.deauthorize_user(chat_id)
@@ -18,27 +26,111 @@ def handle_message(bot, message):
         request_auth(bot, chat_id)
         return
 
+    # Обработка главного меню
+    if text == "📅 график смен":
+        # Детальное логирование нажатия кнопки графика
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule menu opened",
+            details="Main schedule button clicked"
+        )
+        bot.send_message(chat_id, "Выберите вариант:", reply_markup=create_schedule_submenu())
+    
+    elif text == "👤 мои смены":
+        bot.send_message(chat_id, "Ваши смены:", reply_markup=create_my_shifts_submenu())
+    
+    elif text == "🛠 инструменты":
+        bot.send_message(chat_id, "Инструменты:", reply_markup=create_tools_submenu())
+    
+    # Обработка подменю графика
+    elif text == "сегодня":
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule viewed",
+            details="Today's schedule requested"
+        )
+        show_schedule(bot, chat_id, datetime.now().date())
+        
+    elif text == "завтра":
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule viewed", 
+            details="Tomorrow's schedule requested"
+        )
+        show_schedule(bot, chat_id, datetime.now().date() + timedelta(days=1))
+        
+    elif text == "следующая смена":
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule viewed",
+            details="Next shift requested"
+        )
+        show_next_shift(bot, chat_id)
+        
+    elif text == "выбрать дату":
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule date selection started",
+            details="Date picker initiated"
+        )
+        request_date(bot, chat_id)
+    
+    # Обработка подменю "Мои смены"
+    elif text == "все мои смены":
+        show_user_shifts(bot, chat_id)
+    elif text == "моя статистика":
+        show_statistics(bot, chat_id)
+    
+    # Обработка кнопки "Назад"
+    elif text == "🔙 назад":
+        show_main_menu(bot, chat_id)
+    
+    # Старая логика (для совместимости)
+    else:
+        handle_legacy_commands(bot, message)
+        
+def show_next_shift(bot, chat_id):
+    """Показывает следующую смену пользователя"""
+    user_name = auth.get_user_name(chat_id)
+    df = storage.load_schedule()
+    
+    if df is None:
+        return bot.send_message(chat_id, "⚠️ Ошибка загрузки расписания")
+
+    shifts = schedule.get_user_shifts(df, user_name)
+    
+    if shifts.empty:
+        return bot.send_message(chat_id, "🎉 У вас нет запланированных смен!")
+    
+    next_shift = shifts.iloc[0]
+    date_str = next_shift["Дата"].strftime("%d.%m")  # Формат без года
+    weekday_ru = schedule.WEEKDAYS.get(next_shift["Дата"].strftime("%A"), "?")  # Добавляем определение weekday_ru
+    
+    response = (
+        f"<b>⬇️ Ваша следующая смена:</b>\n"
+        f"<pre>┌─────────────────────────────\n"
+        f"│ 📅 {date_str} ({weekday_ru})\n"
+        f"│ 👨‍💻 Основная: {next_shift.get('Основа', '—')}\n"
+        f"│ 🌙 Ночь: {next_shift.get('Ночь', '—')}\n"
+        f"└─────────────────────────────</pre>"
+    )
+    
+    bot.send_message(chat_id, response, parse_mode="HTML")
+
+def handle_legacy_commands(bot, message):
+    """Обработка старых команд для обратной совместимости"""
+    chat_id = message.chat.id
+    text = message.text.lower()
+    
     if text == "мои смены":
         show_user_shifts(bot, chat_id)
-    elif text == "сегодня":
-        show_schedule(bot, chat_id, datetime.now().date())
-    elif text == "завтра":
-        show_schedule(bot, chat_id, datetime.now().date() + timedelta(days=1))
-    elif text == "выбрать дату":
-        request_date(bot, chat_id)
     elif text == "тестовые функции":
-        bot.send_message(chat_id, "Выберите действие:", reply_markup=create_test_menu())
-    elif text == "статистика":
-        show_statistics(bot, chat_id)
-    elif text == "назад в меню":
-        show_main_menu(bot, chat_id)
-    else:
-        try:
-            date_str = f"{text}.{datetime.now().year}"
-            date_obj = datetime.strptime(date_str, "%d.%m.%Y").date()
-            show_schedule(bot, chat_id, date_obj)
-        except ValueError:
-            show_main_menu(bot, chat_id)
+        bot.send_message(chat_id, "Инструменты:", reply_markup=create_tools_submenu())
 
 
 def show_statistics(bot, chat_id):
@@ -72,33 +164,29 @@ def show_statistics(bot, chat_id):
         if pd.notna(row["Резерв"]) and row["Резерв"] == user_name:
             stats["Резерв"]["hours"] += 9
             stats["Резерв"]["count"] += 1
+        if pd.notna(row["Руководитель"]) and row["Руководитель"] == user_name:
+            stats["Руководитель"]["hours"] += 9
+            stats["Руководитель"]["count"] += 1
 
     total_hours = sum(v["hours"] for v in stats.values())
 
     if total_hours == 0:
-        bot.send_message(
-            chat_id,
-            "📭 У вас нет данных по отработанным сменам",
-            reply_markup=create_test_menu(),
-        )
+        bot.send_message(chat_id, "📭 У вас нет данных по отработанным сменам")
         return
 
     response = (
-        f"📊 <b>Статистика {user_name}</b>\n\n"
-        f"🕒 Всего часов: <b>{total_hours}</b>\n\n"
-        f"🔹 Основные смены: {stats['Основная']['hours']} ч "
-        f"({stats['Основная']['count']} смен)\n"
-        f"🌙 Ночные смены: {stats['Ночь']['hours']} ч "
-        f"({stats['Ночь']['count']} смен)\n"
-        f"🖥 Администрирование: {stats['Администрирование']['hours']} ч "
-        f"({stats['Администрирование']['count']} смен)\n"
-        f"🔄 Резерв: {stats['Резерв']['hours']} ч "
-        f"({stats['Резерв']['count']} смен)"
+        f"<b>📊 Статистика {user_name}</b>\n"
+        "<pre>┌─────────────────────────────\n"
+        f"│ <b>🕒 Всего часов</b>:     <b>{total_hours}</b>\n"
+        "├─────────────────────────────\n"
+        f"│ <b>🔹 Основные смены</b>:  {stats['Основная']['hours']} ч ({stats['Основная']['count']} смен)\n"
+        f"│ <b>🌙 Ночные смены</b>:    {stats['Ночь']['hours']} ч ({stats['Ночь']['count']} смен)\n"
+        f"│ <b>🖥 Администрирование</b>: {stats['Администрирование']['hours']} ч ({stats['Администрирование']['count']} смен)\n"
+        f"│ <b>🔄 Резерв</b>:          {stats['Резерв']['hours']} ч ({stats['Резерв']['count']} смен)\n"
+        "└─────────────────────────────</pre>"
     )
 
-    bot.send_message(
-        chat_id, response, parse_mode="HTML", reply_markup=create_test_menu()
-    )
+    bot.send_message(chat_id, response, parse_mode="HTML")
 
 
 def request_auth(bot, chat_id):
@@ -123,41 +211,42 @@ def process_auth_step(bot, message):
     if not success:
         request_auth(bot, chat_id)
 
-
 def show_user_shifts(bot, chat_id):
-    """Показывает пользователю его запланированные смены."""
+    """Показывает смены пользователя в фирменном стиле"""
     user_name = auth.get_user_name(chat_id)
     df = storage.load_schedule()
-
+    
     if df is None:
-        bot.send_message(chat_id, "⚠️ Ошибка загрузки расписания")
-        return
+        return bot.send_message(chat_id, "⚠️ Ошибка загрузки расписания", parse_mode="HTML")
 
     shifts = schedule.get_user_shifts(df, user_name)
-
+    
     if shifts.empty:
-        bot.send_message(chat_id, "✅ У вас нет запланированных смен")
-        return
+        return bot.send_message(chat_id, "🎉 У вас нет запланированных смен!", parse_mode="HTML")
 
-    response = "📅 <b>Ваши ближайшие смены:</b>\n\n"
-
+    message = [
+        "<b>📅 Ваши ближайшие смены:</b>",
+        "<pre>┌─────────────────────────────"
+    ]
+    
     for _, row in shifts.iterrows():
-        date_str = row["Дата"].strftime("%d.%m.%Y")
-        weekday_en = row["Дата"].strftime("%A")
-        weekday_ru = schedule.WEEKDAYS.get(weekday_en, weekday_en)
-
-        shift_types = []
+        date_str = row["Дата"].strftime("%d.%m")  # Убрали .%Y из формата даты
+        weekday_ru = schedule.WEEKDAYS.get(row["Дата"].strftime("%A"), "")
+        
         if row["Основа"] == user_name:
-            shift_types.append("Основная")
+            message.append(f"│ <b>👨‍💻 Основная</b>:     {date_str} ({weekday_ru})")
         if pd.notna(row["Администрирование"]) and row["Администрирование"] == user_name:
-            shift_types.append("Администрирование")
+            message.append(f"│ <b>💻 Админ</b>:        {date_str} ({weekday_ru})")
         if row["Ночь"] == user_name:
-            shift_types.append("Ночная")
-
-        response += f"▪️ {date_str} ({weekday_ru}): {', '.join(shift_types)}\n"
-
-    bot.send_message(chat_id, response, parse_mode="HTML")
-
+            message.append(f"│ <b>🌙 Ночь</b>:         {date_str} ({weekday_ru})")
+    
+    message.append("└─────────────────────────────</pre>")
+    
+    bot.send_message(
+        chat_id,
+        "\n".join(message),
+        parse_mode="HTML"
+    )
 
 def show_schedule(bot, chat_id, date):
     """Показывает расписание на указанную дату."""
@@ -193,11 +282,20 @@ def request_date(bot, chat_id):
 
 
 def process_date_input(bot, message):
-    """Обрабатывает введенную пользователем дату."""
     chat_id = message.chat.id
+    user_name = auth.get_user_name(chat_id)
+
     try:
         date_str = f"{message.text}.{datetime.now().year}"
         date_obj = datetime.strptime(date_str, "%d.%m.%Y").date()
+
+        user_activity_logger.log_activity(
+            user_id=chat_id,
+            username=user_name,
+            action="Schedule viewed",
+            details=f"Custom date selected: {date_str}"
+        )
+
         show_schedule(bot, chat_id, date_obj)
     except ValueError:
         bot.send_message(

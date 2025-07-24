@@ -3,9 +3,4 @@ venv/
 .env/
 ENV/
 __pycache__/
-dist/
-lib/
-lib64/
-parts/
-sdist/
-var/
+data/logs/
