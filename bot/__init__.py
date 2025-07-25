@@ -1,12 +1,7 @@
 from .bot import ScheduleBot
-from .handlers import handle_message
-from .keyboards import create_main_menu, create_schedule_submenu, create_my_shifts_submenu, create_tools_submenu
+from .handlers.message_handler import handle_message
 
 __all__ = [
-    "ScheduleBot", 
-    "handle_message", 
-    "create_main_menu",
-    "create_schedule_submenu",
-    "create_my_shifts_submenu",
-    "create_tools_submenu"
+    "ScheduleBot",
+    "handle_message"
 ]
