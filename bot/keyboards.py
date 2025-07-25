@@ -2,7 +2,7 @@ from telebot import types
 
 def create_main_menu():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-    btn_schedule = types.KeyboardButton("📅 График смен")
+    btn_schedule = types.KeyboardButton("📅 График смен")  # Исправлено на "График смен"
     btn_my_shifts = types.KeyboardButton("👤 Мои смены")
     btn_tools = types.KeyboardButton("🛠 Инструменты")
     markup.add(btn_schedule, btn_my_shifts, btn_tools)
