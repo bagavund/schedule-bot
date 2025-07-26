@@ -16,3 +16,4 @@ data/logs/*.log
 # Кэш и временные файлы
 __pycache__/
 *.py[cod]
+__pycache__/
