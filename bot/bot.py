@@ -1,7 +1,6 @@
 import telebot
 from config import Config
-from bot.handlers import handle_message
-
+from bot.handlers.message_handler import handle_message
 
 class ScheduleBot:
     def __init__(self):
