@@ -1,4 +1,4 @@
-from .auth import is_authorized, authorize_user, get_user_name, deauthorize_user
+from .auth import is_authorized, authorize_user, get_user_name, deauthorize_user, is_admin
 from .user_logging import user_activity_logger
 from .schedule import (
     format_schedule,
@@ -14,6 +14,7 @@ __all__ = [
     "authorize_user",
     "get_user_name",
     "deauthorize_user",
+    "is_admin",
     "format_schedule",
     "get_date_schedule",
     "get_user_shifts",

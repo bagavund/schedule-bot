@@ -126,3 +126,162 @@
 2025-07-25 23:50:22 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сменить пользователя
 2025-07-25 23:50:22 - INFO - UserID: None | Username: Unknown | Action: Auth requested
 2025-07-25 23:50:29 - INFO - UserID: 421536952 | Username: None | Action: Auth processed | Details: Text: Комлев Владислав
+2025-07-26 06:43:06 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:43:06 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:43:08 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:43:08 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:43:08 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:43:09 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Завтра
+2025-07-26 06:43:09 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Завтра
+2025-07-26 06:43:09 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:43:10 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Следующая смена
+2025-07-26 06:43:10 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Следующая смена
+2025-07-26 06:43:10 - INFO - UserID: None | Username: Unknown | Action: Next shift requested
+2025-07-26 06:43:11 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Выбрать дату
+2025-07-26 06:43:11 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Выбрать дату
+2025-07-26 06:46:08 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:46:08 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:46:08 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:46:34 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:46:34 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:46:34 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:48:08 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:48:08 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:48:08 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:48:11 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:48:11 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:48:12 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Завтра
+2025-07-26 06:48:12 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Завтра
+2025-07-26 06:48:12 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:48:14 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:48:14 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:48:15 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Следующая смена
+2025-07-26 06:48:15 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Следующая смена
+2025-07-26 06:48:15 - INFO - UserID: None | Username: Unknown | Action: Next shift requested
+2025-07-26 06:48:17 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Выбрать дату
+2025-07-26 06:48:17 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Выбрать дату
+2025-07-26 06:48:23 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:48:30 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 06:48:30 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 06:48:31 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 06:48:31 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 06:48:31 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Admin panel accessed | Details: Text: Админ-панель
+2025-07-26 06:48:33 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 06:48:33 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 06:51:37 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:51:37 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:51:38 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:51:38 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:51:38 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:51:40 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:51:40 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:51:41 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Завтра
+2025-07-26 06:51:41 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Завтра
+2025-07-26 06:51:41 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:51:42 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:51:42 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:51:43 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Следующая смена
+2025-07-26 06:51:43 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Следующая смена
+2025-07-26 06:51:43 - INFO - UserID: None | Username: Unknown | Action: Next shift requested
+2025-07-26 06:51:45 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Выбрать дату
+2025-07-26 06:51:45 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Выбрать дату
+2025-07-26 06:51:56 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:51:59 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 06:51:59 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 06:52:02 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 06:52:02 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 06:57:28 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:57:28 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:57:29 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:57:29 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Сегодня
+2025-07-26 06:57:29 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:57:31 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:57:31 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 06:57:31 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Следующая смена
+2025-07-26 06:57:31 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Следующая смена
+2025-07-26 06:57:31 - INFO - UserID: None | Username: Unknown | Action: Next shift requested
+2025-07-26 06:57:33 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Завтра
+2025-07-26 06:57:33 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Завтра
+2025-07-26 06:57:33 - INFO - UserID: None | Username: Unknown | Action: Schedule viewed
+2025-07-26 06:57:36 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 👤 Мои смены
+2025-07-26 06:57:36 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 👤 Мои смены
+2025-07-26 06:57:38 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Моя статистика
+2025-07-26 06:57:38 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Моя статистика
+2025-07-26 06:57:38 - INFO - UserID: None | Username: Unknown | Action: Statistics requested
+2025-07-26 06:57:39 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Все мои смены
+2025-07-26 06:57:39 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Все мои смены
+2025-07-26 06:57:39 - INFO - UserID: None | Username: Unknown | Action: User shifts viewed
+2025-07-26 06:57:40 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🔙 Назад
+2025-07-26 06:57:40 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🔙 Назад
+2025-07-26 06:57:41 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 06:57:41 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 06:57:43 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 06:57:43 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 06:57:43 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Admin panel accessed | Details: Text: Админ-панель
+2025-07-26 06:57:45 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 06:57:45 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 06:57:45 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Broadcast initiated | Details: Text: 📢 Рассылка
+2025-07-26 06:57:53 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Admin panel accessed | Details: Text: отмена
+2025-07-26 06:58:29 - INFO - UserID: 7601161726 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 06:58:29 - INFO - UserID: 7601161726 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 06:58:35 - INFO - UserID: 7601161726 | Username: Комлев Владислав | Action: Message received | Details: Text: Сменить пользователя
+2025-07-26 06:58:35 - INFO - UserID: 7601161726 | Username: Комлев Владислав | Action: Message received | Details: Text: Сменить пользователя
+2025-07-26 06:58:35 - INFO - UserID: None | Username: Unknown | Action: Auth requested
+2025-07-26 06:59:09 - INFO - UserID: 7601161726 | Username: None | Action: Message received | Details: Text: Полунин Вадим
+2025-07-26 06:59:09 - INFO - UserID: 7601161726 | Username: Unauthorized | Action: Message received | Details: Text: Полунин Вадим
+2025-07-26 06:59:09 - INFO - UserID: None | Username: Unknown | Action: Auth requested
+2025-07-26 06:59:18 - INFO - UserID: 7601161726 | Username: None | Action: Auth processed | Details: Text: Полунин Вадим
+2025-07-26 06:59:27 - INFO - UserID: 421536952 | Username: None | Action: Message received | Details: Text: 🔙 Назад
+2025-07-26 06:59:27 - INFO - UserID: 421536952 | Username: Unauthorized | Action: Message received | Details: Text: 🔙 Назад
+2025-07-26 06:59:27 - INFO - UserID: None | Username: Unknown | Action: Auth requested
+2025-07-26 06:59:34 - INFO - UserID: 421536952 | Username: None | Action: Auth processed | Details: Text: Комлев Владислав
+2025-07-26 06:59:44 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 👤 Мои смены
+2025-07-26 06:59:44 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 👤 Мои смены
+2025-07-26 06:59:45 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🔙 Назад
+2025-07-26 06:59:45 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🔙 Назад
+2025-07-26 06:59:45 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 06:59:45 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 06:59:47 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 06:59:47 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 06:59:47 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Admin panel accessed | Details: Text: Админ-панель
+2025-07-26 06:59:49 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 06:59:49 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 06:59:49 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Broadcast initiated | Details: Text: 📢 Рассылка
+2025-07-26 07:01:59 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: t
+2025-07-26 07:01:59 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: t
+2025-07-26 07:02:03 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 07:02:03 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 07:02:05 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 07:02:05 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 07:02:05 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Admin panel accessed | Details: Text: Админ-панель
+2025-07-26 07:02:06 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 07:02:06 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 07:02:06 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Broadcast initiated | Details: Text: 📢 Рассылка
+2025-07-26 07:03:58 - INFO - UserID: 7601161726 | Username: Полунин Вадим | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 07:03:58 - INFO - UserID: 7601161726 | Username: Полунин Вадим | Action: Message received | Details: Text: 📅 График смен
+2025-07-26 07:04:00 - INFO - UserID: 7601161726 | Username: Полунин Вадим | Action: Message received | Details: Text: 🔙 Назад
+2025-07-26 07:04:00 - INFO - UserID: 7601161726 | Username: Полунин Вадим | Action: Message received | Details: Text: 🔙 Назад
+2025-07-26 07:04:03 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: h
+2025-07-26 07:04:03 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: h
+2025-07-26 07:04:05 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 07:04:05 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 07:04:07 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 07:04:07 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 07:04:07 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Admin panel accessed | Details: Text: Админ-панель
+2025-07-26 07:04:08 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 07:04:08 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 07:04:08 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Broadcast initiated | Details: Text: 📢 Рассылка
+2025-07-26 07:04:39 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: меню
+2025-07-26 07:04:39 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: меню
+2025-07-26 07:04:41 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 07:04:41 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 07:04:43 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 07:04:43 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: Админ-панель
+2025-07-26 07:04:43 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Admin panel accessed | Details: Text: Админ-панель
+2025-07-26 07:04:44 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 07:04:44 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Message received | Details: Text: 📢 Рассылка
+2025-07-26 07:04:44 - INFO - UserID: 421536952 | Username: Комлев Владислав | Action: Broadcast initiated | Details: Text: 📢 Рассылка
+2025-07-26 07:06:50 - INFO - UserID: 7601161726 | Username: Полунин Вадим | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 07:06:50 - INFO - UserID: 7601161726 | Username: Полунин Вадим | Action: Message received | Details: Text: 🛠 Инструменты
+2025-07-26 07:06:51 - INFO - UserID: 7601161726 | Username: Полунин Вадим | Action: Message received | Details: Text: Админ-панель
+2025-07-26 07:06:51 - INFO - UserID: 7601161726 | Username: Полунин Вадим | Action: Message received | Details: Text: Админ-панель
