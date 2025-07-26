@@ -1,6 +1,7 @@
-.env
-venv/
-.env/
-ENV/
-__pycache__/
 data/logs/
+.env
+__pycache__/
+bot/__pycache__/
+ bot/handlers/__pycache__/
+bot/services/__pycache__/
+bot/utils/__pycache__/
