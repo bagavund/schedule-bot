@@ -12,7 +12,7 @@ class Config:
     SCHEDULE_FILE = DATA_DIR / "расписание.xlsx"
     ALLOWED_USERS_FILE = DATA_DIR / "allowed_users.txt"
     USER_STATES_FILE = DATA_DIR / "user_states.json"
-    ADMINS_FILE = DATA_DIR / "admins.txt"  # Новый файл
+    ADMINS_FILE = DATA_DIR / "admins.txt" 
     
     BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
     
