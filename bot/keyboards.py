@@ -2,7 +2,7 @@ from telebot import types
 
 def create_main_menu():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-    btn_schedule = types.KeyboardButton("📅 График смен")  # Исправлено на "График смен"
+    btn_schedule = types.KeyboardButton("📅 График смен")
     btn_my_shifts = types.KeyboardButton("👤 Мои смены")
     btn_tools = types.KeyboardButton("🛠 Инструменты")
     markup.add(btn_schedule, btn_my_shifts, btn_tools)
@@ -32,4 +32,11 @@ def create_tools_submenu():
     btn_admin_tools = types.KeyboardButton("Админ-панель")
     btn_back = types.KeyboardButton("🔙 Назад")
     markup.add(btn_switch_user, btn_admin_tools, btn_back)
+    return markup
+
+def create_admin_keyboard():
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.row(types.KeyboardButton("📢 Рассылка"))
+    markup.row(types.KeyboardButton("📊 Статистика"))
+    markup.row(types.KeyboardButton("🔙 Выйти из админки"))
     return markup

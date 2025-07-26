@@ -3,6 +3,7 @@ from .auth_handlers import request_auth, process_auth_step
 from .schedule_handlers import handle_today, handle_tomorrow, request_date, show_schedule
 from .shift_handlers import show_user_shifts, show_next_shift, show_statistics
 from .menu_handlers import handle_main_menu
+from .admin_handlers import handle_admin_panel, handle_broadcast_start, setup_admin_handlers
 
 __all__ = [
     'handle_message',
@@ -15,5 +16,8 @@ __all__ = [
     'show_user_shifts',
     'show_next_shift',
     'show_statistics',
-    'handle_main_menu'
+    'handle_main_menu',
+    'handle_admin_panel',  # Добавлено
+    'handle_broadcast_start',  # Добавлено
+    'setup_admin_handlers'  # Добавлено
 ]
