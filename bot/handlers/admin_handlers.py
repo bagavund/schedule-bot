@@ -9,31 +9,36 @@ logger = logging.getLogger(__name__)
 
 @log_action("Admin panel accessed")
 def handle_admin_panel(bot, message):
-    """Обработчик команды админ-панели"""
     if not auth.is_admin(message.chat.id):
-        logger.warning(f"Unauthorized admin access attempt by {message.chat.id}")
-        bot.send_message(message.chat.id, "⛔ Доступ запрещен")
+        logger.warning(f"Unauthorized admin access by {message.chat.id}")
+        bot.send_message(
+            message.chat.id,
+            "⛔ Доступ запрещен",
+            reply_markup=create_main_menu()
+        )
         return
+    
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.row(types.KeyboardButton("📢 Рассылка"))
+    markup.row(types.KeyboardButton("📊 Статистика"))
+    markup.row(types.KeyboardButton("🔙 Выйти из админки"))
     
     bot.send_message(
         message.chat.id,
         "🛠 Панель администратора",
-        reply_markup=create_admin_keyboard()
+        reply_markup=markup
     )
 
 @log_action("Broadcast initiated")
 def handle_broadcast_start(bot, message):
-    """Начало процесса рассылки"""
     msg = bot.send_message(
         message.chat.id,
-        "📝 Введите сообщение для рассылки (поддерживается HTML-разметка):\n"
-        "Напишите 'отмена' для отмены",
+        "📝 Введите сообщение для рассылки:\n(Напишите 'отмена' для отмены)",
         reply_markup=types.ForceReply()
     )
     bot.register_next_step_handler(msg, lambda m: process_broadcast_message(bot, m))
 
 def process_broadcast_message(bot, message):
-    """Обработка сообщения для рассылки"""
     if message.text.lower() == 'отмена':
         return handle_admin_panel(bot, message)
     
@@ -43,18 +48,16 @@ def process_broadcast_message(bot, message):
         types.InlineKeyboardButton("❌ Отменить", callback_data="cancel")
     )
     
-    preview = bot.send_message(
+    bot.send_message(
         message.chat.id,
         f"✉️ Подтвердите рассылку:\n\n{message.text}",
-        reply_markup=markup,
-        parse_mode="HTML"
+        reply_markup=markup
     )
 
 def setup_admin_handlers(bot):
     @bot.callback_query_handler(func=lambda call: call.data.startswith('confirm_'))
     def confirm_broadcast(call):
         try:
-            # Получаем текст из текущего сообщения, а не из reply_to_message
             message_text = call.message.text.split("Подтвердите рассылку:")[-1].strip()
             
             bot.edit_message_text(
@@ -71,14 +74,27 @@ def setup_admin_handlers(bot):
                 call.message.chat.id,
                 call.message.id
             )
+            
+            # Возврат в админ-панель
+            handle_admin_panel(bot, call.message)
+            
         except Exception as e:
             logger.error(f"Broadcast error: {e}")
             bot.answer_callback_query(call.id, "❌ Ошибка при рассылке")
-    
+            handle_admin_panel(bot, call.message)
+
     @bot.callback_query_handler(func=lambda call: call.data == 'cancel')
     def cancel_broadcast(call):
-        bot.delete_message(call.message.chat.id, call.message.id)
-        bot.send_message(call.message.chat.id, "❌ Рассылка отменена")
+        try:
+            bot.delete_message(call.message.chat.id, call.message.id)
+            handle_admin_panel(bot, call.message)
+        except Exception as e:
+            logger.error(f"Cancel error: {e}")
+            bot.send_message(
+                call.message.chat.id,
+                "Ошибка при отмене",
+                reply_markup=create_admin_keyboard()
+            )
 
 __all__ = [
     'handle_admin_panel',

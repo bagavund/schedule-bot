@@ -35,9 +35,8 @@ def create_tools_submenu():
     return markup
 
 def create_admin_keyboard():
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=2)
-    btn_broadcast = types.KeyboardButton("📢 Рассылка")  # Точное совпадение текста
-    btn_stats = types.KeyboardButton("📊 Статистика")
-    btn_back = types.KeyboardButton("🔙 Назад")
-    markup.add(btn_broadcast, btn_stats, btn_back)
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.row(types.KeyboardButton("📢 Рассылка"))
+    markup.row(types.KeyboardButton("📊 Статистика"))
+    markup.row(types.KeyboardButton("🔙 Выйти из админки"))
     return markup

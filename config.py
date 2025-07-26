@@ -9,7 +9,7 @@ class Config:
     DATA_DIR = PROJECT_ROOT / "data"
     LOGS_DIR = DATA_DIR / "logs"
     
-    SCHEDULE_FILE = DATA_DIR / "schedule.xlsx"
+    SCHEDULE_FILE = DATA_DIR / "расписание.xlsx"
     ALLOWED_USERS_FILE = DATA_DIR / "allowed_users.txt"
     USER_STATES_FILE = DATA_DIR / "user_states.json"
     ADMINS_FILE = DATA_DIR / "admins.txt"  # Новый файл
