@@ -12,18 +12,14 @@ class Config:
     SCHEDULE_FILE = DATA_DIR / "расписание.xlsx"
     ALLOWED_USERS_FILE = DATA_DIR / "allowed_users.txt"
     USER_STATES_FILE = DATA_DIR / "user_states.json"
-    ADMINS_FILE = DATA_DIR / "admins.txt" 
     
-    BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+    # Добавляем оба варианта имени для совместимости
+    TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+    BOT_TOKEN = TELEGRAM_TOKEN  # Алиас для обратной совместимости
     
-    @classmethod
-    def load_admins(cls):
-        try:
-            with open(cls.ADMINS_FILE, 'r', encoding='utf-8') as f:
-                return [line.strip() for line in f if line.strip()]
-        except FileNotFoundError:
-            return []
-
+    if not TELEGRAM_TOKEN:
+        raise ValueError("Токен бота не найден в .env файле")
+    
     @classmethod
     def verify_files_exist(cls):
         """Проверяет существование необходимых файлов"""
@@ -39,5 +35,4 @@ class Config:
 
         if missing_files:
             raise FileNotFoundError(
-                "Отсутствуют необходимые файлы:\n" + "\n".join(missing_files)
-            )
+                "Отсутствуют необходимые файлы:\n" + "\n".join(missing_files))

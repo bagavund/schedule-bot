@@ -1,19 +1,13 @@
-# Файлы окружения
+# Environment variables
 .env
-.env.local
-.env.*.local
 
-# Виртуальное окружение
+# Virtual environment
 venv/
-ENV/
-.env/
 .venv/
 
-# Логи
+# Log files
 data/logs/*.log
-*.log
 
-# Кэш и временные файлы
-__pycache__/
-*.py[cod]
-__pycache__/
+# Python cache in ALL directories
+**/__pycache__/
+**/*.py[cod]

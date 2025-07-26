@@ -3,21 +3,18 @@ import os
 import logging
 from pathlib import Path
 from config import Config
-from bot.services.storage import load_allowed_users
 
 logger = logging.getLogger(__name__)
 
 # Пути к файлам
 DATA_DIR = Config.DATA_DIR
 USER_STATES_FILE = DATA_DIR / "user_states.json"
-ADMINS_FILE = DATA_DIR / "admins.txt"
 
 # Создаем директорию, если не существует
 os.makedirs(DATA_DIR, exist_ok=True)
 
 # Глобальные переменные
 user_states = {}
-ADMINS_LIST = []
 
 def load_user_states():
     """Загружает состояния пользователей из файла"""
@@ -33,20 +30,6 @@ def load_user_states():
         logger.error(f"Ошибка загрузки user_states: {e}")
         user_states = {}
 
-def load_admins():
-    """Загружает список администраторов из файла"""
-    global ADMINS_LIST
-    try:
-        if ADMINS_FILE.exists():
-            with open(ADMINS_FILE, "r", encoding="utf-8") as f:
-                ADMINS_LIST = [line.strip() for line in f if line.strip()]
-        else:
-            ADMINS_LIST = []
-            logger.warning(f"Файл администраторов не найден: {ADMINS_FILE}")
-    except Exception as e:
-        logger.error(f"Ошибка загрузки списка администраторов: {e}")
-        ADMINS_LIST = []
-
 def save_user_states():
     """Сохраняет состояния пользователей в файл"""
     try:
@@ -55,6 +38,15 @@ def save_user_states():
     except Exception as e:
         logger.error(f"Ошибка сохранения user_states: {e}")
 
+def load_allowed_users():
+    """Загружает список разрешенных пользователей"""
+    try:
+        with open(Config.ALLOWED_USERS_FILE, "r", encoding="utf-8") as f:
+            return [line.strip() for line in f if line.strip()]
+    except Exception as e:
+        logger.error(f"Ошибка загрузки разрешенных пользователей: {e}")
+        return []
+
 def is_authorized(chat_id):
     """Проверяет авторизацию пользователя"""
     return str(chat_id) in user_states and user_states[str(chat_id)].get("authorized", False)
@@ -62,13 +54,6 @@ def is_authorized(chat_id):
 def get_user_name(chat_id):
     """Возвращает имя пользователя"""
     return user_states.get(str(chat_id), {}).get("name")
-
-def is_admin(chat_id):
-    """Проверяет, является ли пользователь администратором"""
-    if not is_authorized(chat_id):
-        return False
-    user_name = get_user_name(chat_id)
-    return user_name in ADMINS_LIST
 
 def authorize_user(chat_id, full_name):
     """Авторизует пользователя"""
@@ -97,5 +82,4 @@ def deauthorize_user(chat_id):
 
 # Инициализация при загрузке модуля
 load_user_states()
-load_admins()
-logger.info(f"Модуль auth инициализирован. Загружено {len(user_states)} пользователей и {len(ADMINS_LIST)} администраторов")
+logger.info(f"Модуль auth инициализирован. Загружено {len(user_states)} пользователей")
