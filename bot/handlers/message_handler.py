@@ -1,10 +1,9 @@
 from bot.services import auth
 from bot.services.user_logging import user_activity_logger
-from bot.keyboards import create_main_menu, create_admin_keyboard
+from bot.keyboards import create_main_menu
 from bot.utils.menu_utils import handle_menu_action
 from bot.utils.decorators import log_action
 import logging
-from telebot import types
 
 logger = logging.getLogger(__name__)
 
@@ -37,38 +36,13 @@ def handle_message(bot, message):
         return
 
     # Обработка кнопки "Назад"
-    if text == "🔙 Выйти из админки":
-        bot.send_message(
-            chat_id,
-            "Вы вышли из админ-панели",
-            reply_markup=create_main_menu()
-        )
-        return
-    elif text == "🔙 Назад":
+    if text == "🔙 Назад":
         bot.send_message(
             chat_id,
             "Главное меню:",
             reply_markup=create_main_menu()
         )
         return
-
-    # Обработка админских команд
-    if auth.is_admin(chat_id):
-        if text == "📢 Рассылка":
-            from .admin_handlers import handle_broadcast_start
-            handle_broadcast_start(bot, message)
-            return
-        elif text == "📊 Статистика":
-            bot.send_message(
-                chat_id, 
-                "Функция статистики в разработке",
-                reply_markup=create_admin_keyboard()
-            )
-            return
-        elif text.lower() == "админ-панель":
-            from .admin_handlers import handle_admin_panel
-            handle_admin_panel(bot, message)
-            return
 
     # Обработка главного меню
     if handle_menu_action(bot, chat_id, text):

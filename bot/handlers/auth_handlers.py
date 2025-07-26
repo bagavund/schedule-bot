@@ -1,13 +1,6 @@
 from bot.services import auth
 from bot.keyboards import create_main_menu
 from bot.utils.decorators import log_action
-from config import Config
-
-ADMINS = Config.load_admins()
-
-def is_admin(chat_id: int) -> bool:
-    user_name = get_user_name(chat_id)
-    return user_name in ADMINS
 
 @log_action("Auth requested")
 def request_auth(bot, chat_id):
