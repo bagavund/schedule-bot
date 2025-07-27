@@ -57,7 +57,7 @@ def get_user_shifts(df, user_name, only_future=True):
     user_shifts = df[mask].copy()
 
     if only_future:
-        user_shifts = user_shifts[user_shifts["Дата"] >= today]
+        user_shifts = user_shifts[user_shifts["Дата"] > today]
 
     return user_shifts.sort_values("Дата")
 

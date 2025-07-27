@@ -40,7 +40,7 @@ def handle_message(bot, message):
         return
 
     # Обработка кнопки "Назад"
-    if text == "🔙 Назад":
+    if text == "Назад":
         bot.send_message(
             chat_id,
             "Главное меню:",

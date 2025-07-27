@@ -2,7 +2,9 @@ import json
 import os
 import logging
 from pathlib import Path
+from functools import lru_cache
 from config import Config
+from bot.services.storage import load_allowed_users
 
 logger = logging.getLogger(__name__)
 
@@ -38,25 +40,25 @@ def save_user_states():
     except Exception as e:
         logger.error(f"Ошибка сохранения user_states: {e}")
 
-def load_allowed_users():
-    """Загружает список разрешенных пользователей"""
-    try:
-        with open(Config.ALLOWED_USERS_FILE, "r", encoding="utf-8") as f:
-            return [line.strip() for line in f if line.strip()]
-    except Exception as e:
-        logger.error(f"Ошибка загрузки разрешенных пользователей: {e}")
-        return []
-
+@lru_cache(maxsize=32)
 def is_authorized(chat_id):
     """Проверяет авторизацию пользователя"""
     return str(chat_id) in user_states and user_states[str(chat_id)].get("authorized", False)
 
 def get_user_name(chat_id):
     """Возвращает имя пользователя"""
-    return user_states.get(str(chat_id), {}).get("name")
+    try:
+        return user_states.get(str(chat_id), {}).get("name")
+    except Exception as e:
+        logger.error(f"Ошибка получения имени для chat_id {chat_id}: {e}")
+        return None
 
 def authorize_user(chat_id, full_name):
     """Авторизует пользователя"""
+    if not isinstance(full_name, str) or len(full_name.strip()) < 2:
+        return False, "❌ Некорректное имя пользователя"
+    
+    full_name = full_name.strip()
     allowed_users = load_allowed_users()
     
     if not allowed_users:
@@ -66,6 +68,7 @@ def authorize_user(chat_id, full_name):
     if full_name in allowed_users:
         user_states[str(chat_id)] = {"authorized": True, "name": full_name}
         save_user_states()
+        is_authorized.cache_clear()  # Очищаем кэш
         logger.info(f"Пользователь авторизован: {full_name} (ID: {chat_id})")
         return True, f"✅ Авторизация успешна, {full_name}!"
     
@@ -76,9 +79,11 @@ def deauthorize_user(chat_id):
     """Деавторизует пользователя"""
     chat_id = str(chat_id)
     if chat_id in user_states:
+        username = user_states[chat_id].get("name", "unknown")
         del user_states[chat_id]
         save_user_states()
-        logger.info(f"Пользователь деавторизован (ID: {chat_id})")
+        is_authorized.cache_clear()  # Очищаем кэш
+        logger.info(f"Пользователь деавторизован: {username} (ID: {chat_id})")
 
 # Инициализация при загрузке модуля
 load_user_states()
