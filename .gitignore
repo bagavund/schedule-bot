@@ -1,14 +1,10 @@
-# Environment variables
+# Объединенные правила из master и develop
 .env
-
-# Virtual environment
 venv/
 .venv/
-
-# Log files
-data/logs/*.log
+ENV/
+data/logs/
 data/user_states.json
-
-# Python cache in ALL directories
+bot_runtime.log
 **/__pycache__/
 **/*.py[cod]
