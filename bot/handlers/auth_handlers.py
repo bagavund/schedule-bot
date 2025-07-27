@@ -1,6 +1,6 @@
 from bot.services import auth
 from bot.keyboards import create_main_menu
-from bot.utils.decorators import log_action
+from bot.utils import log_action
 
 @log_action("Auth requested")
 def request_auth(bot, chat_id):

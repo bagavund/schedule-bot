@@ -7,7 +7,7 @@ from bot.keyboards import (
     create_my_shifts_submenu,
     create_tools_submenu
 )
-from bot.utils.decorators import log_action
+from bot.utils import log_action
 
 @log_action("Main menu action")
 def handle_main_menu(bot, message):
