@@ -1,10 +1,14 @@
 from datetime import datetime, timedelta
 from bot.services import auth, schedule
 from bot.keyboards import create_main_menu
-from bot.utils.decorators import log_action
 from bot.utils.schedule_utils import with_schedule
-from bot.utils.response_utils import send_formatted_message, send_error_message
-from bot.utils.date_utils import parse_date
+from bot.utils import (
+    log_action,
+    with_schedule,
+    send_formatted_message,
+    send_error_message,
+    parse_date
+)
 
 @log_action("Schedule viewed")
 @with_schedule
