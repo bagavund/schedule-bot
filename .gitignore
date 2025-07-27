@@ -1,0 +1,14 @@
+# Environment variables
+.env
+
+# Virtual environment
+venv/
+.venv/
+
+# Log files
+data/logs/*.log
+data/user_states.json
+
+# Python cache in ALL directories
+**/__pycache__/
+**/*.py[cod]
