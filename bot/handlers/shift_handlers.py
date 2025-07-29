@@ -22,11 +22,11 @@ def show_user_shifts(bot, df, chat_id):
         date_str = row["Дата"].strftime("%d.%m")
         weekday_ru = schedule.WEEKDAYS.get(row["Дата"].strftime("%A"), "")
         
-        if row["Основа"] == user_name:
+        if pd.notna(row.get("Основа")) and row["Основа"] == user_name:
             lines.append(f"│ <b>👨‍💻 Основная</b>:     {date_str} ({weekday_ru})")
-        if pd.notna(row["Администрирование"]) and row["Администрирование"] == user_name:
+        if pd.notna(row.get("Администрирование")) and row["Администрирование"] == user_name:
             lines.append(f"│ <b>💻 Админ</b>:        {date_str} ({weekday_ru})")
-        if row["Ночь"] == user_name:
+        if pd.notna(row.get("Ночь")) and row["Ночь"] == user_name:
             lines.append(f"│ <b>🌙 Ночь</b>:         {date_str} ({weekday_ru})")
     
     send_formatted_message(bot, chat_id, "📅 Ваши ближайшие смены:", lines)
@@ -45,30 +45,34 @@ def show_next_shift(bot, df, chat_id):
     weekday_ru = schedule.WEEKDAYS.get(next_shift["Дата"].strftime("%A"), "?")
 
     lines = []
-    if next_shift.get('Основа') == user_name:
-        lines.append(f"│ 👨‍💻 Основная: {user_name}")
-    if next_shift.get('Ночь') == user_name:
-        lines.append(f"│ 🌙 Ночь: {user_name}")
-    if next_shift.get('Администрирование') == user_name:
-        lines.append(f"│ 💻 Администрирование: {user_name}")
-    if next_shift.get('Руководитель') == user_name:
-        lines.append(f"│ 👑 Руководитель: {user_name}")
-    if next_shift.get('Резерв') == user_name:
-        lines.append(f"│ 🔄 Резерв: {user_name}")
-    if next_shift.get('Отпуск') == user_name:
-        lines.append(f"│ 🏖 Отпуск: {user_name}")
+    # Проверка смен пользователя
+    shift_checks = [
+        ('Основа', '👨‍💻 Основная'),
+        ('Ночь', '🌙 Ночь'),
+        ('Администрирование', '💻 Администрирование'),
+        ('Руководитель', '👑 Руководитель'),
+        ('Резерв', '🔄 Резерв'),
+        ('Отпуск', '🏖 Отпуск')
+    ]
+    
+    for col, emoji in shift_checks:
+        if pd.notna(next_shift.get(col)) and next_shift[col] == user_name:
+            lines.append(f"│ {emoji}: {user_name}")
 
     if lines:
         lines.append("├─────────────────────────────")
 
-    if pd.notna(next_shift.get('Администрирование')) and next_shift.get('Администрирование') != user_name:
-        lines.append(f"│ 💻 Админ: {next_shift.get('Администрирование', '—')}")
-    if pd.notna(next_shift.get('Руководитель')) and next_shift.get('Руководитель') != user_name:
-        lines.append(f"│ 👑 Руководитель: {next_shift.get('Руководитель', '—')}")
-    if pd.notna(next_shift.get('Резерв')) and next_shift.get('Резерв') != user_name:
-        lines.append(f"│ 🔄 Резерв: {next_shift.get('Резерв', '—')}")
-    if pd.notna(next_shift.get('Отпуск')) and next_shift.get('Отпуск') != user_name:
-        lines.append(f"│ 🏖 Отпуск: {next_shift.get('Отпуск', '—')}")
+    # Дополнительная информация о смене
+    additional_checks = [
+        ('Администрирование', '💻 Админ'),
+        ('Руководитель', '👑 Руководитель'),
+        ('Резерв', '🔄 Резерв'),
+        ('Отпуск', '🏖 Отпуск')
+    ]
+    
+    for col, emoji in additional_checks:
+        if pd.notna(next_shift.get(col)) and next_shift[col] != user_name:
+            lines.append(f"│ {emoji}: {next_shift[col]}")
 
     send_formatted_message(
         bot,
@@ -91,16 +95,16 @@ def show_statistics(bot, df, chat_id):
     }
 
     for _, row in past_shifts.iterrows():
-        if row["Основа"] == user_name:
+        if pd.notna(row.get("Основа")) and row["Основа"] == user_name:
             stats["Основная"]["hours"] += 12
             stats["Основная"]["count"] += 1
-        if row["Ночь"] == user_name:
+        if pd.notna(row.get("Ночь")) and row["Ночь"] == user_name:
             stats["Ночь"]["hours"] += 12
             stats["Ночь"]["count"] += 1
-        if pd.notna(row["Администрирование"]) and row["Администрирование"] == user_name:
+        if pd.notna(row.get("Администрирование")) and row["Администрирование"] == user_name:
             stats["Администрирование"]["hours"] += 9
             stats["Администрирование"]["count"] += 1
-        if pd.notna(row["Резерв"]) and row["Резерв"] == user_name:
+        if pd.notna(row.get("Резерв")) and row["Резерв"] == user_name:
             stats["Резерв"]["hours"] += 9
             stats["Резерв"]["count"] += 1
 
