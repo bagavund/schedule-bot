@@ -5,20 +5,23 @@ from config import Config
 
 logger = logging.getLogger(__name__)
 
-@lru_cache(maxsize=1)
-def load_schedule():
+@lru_cache(maxsize=2)  # Увеличиваем кэш для двух листов
+def load_schedule(sheet_name="ГСМАиЦП"):
+    """Загружает расписание с указанного листа"""
     try:
-        df = pd.read_excel(Config.SCHEDULE_FILE, sheet_name="Лист2")
-        df["Дата"] = pd.to_datetime(df["Дата"]).dt.date
+        df = pd.read_excel(Config.SCHEDULE_FILE, sheet_name=sheet_name)
         
-        # Добавляем отсутствующие колонки
-        for col in ["Резерв", "Руководитель"]:
-            if col not in df.columns:
-                df[col] = pd.NA
-                
+        if sheet_name == "ГСМАиЦП":
+            df["Дата"] = pd.to_datetime(df["Дата"]).dt.date
+            
+            # Добавляем отсутствующие колонки
+            for col in ["Резерв", "Руководитель"]:
+                if col not in df.columns:
+                    df[col] = pd.NA
+        
         return df
     except Exception as e:
-        logger.error(f"Error loading schedule: {e}", exc_info=True)
+        logger.error(f"Error loading schedule from {sheet_name}: {e}", exc_info=True)
         return None
 
 def load_allowed_users():

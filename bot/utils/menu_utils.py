@@ -1,17 +1,22 @@
 from bot.keyboards import (
-    create_schedule_submenu,
-    create_my_shifts_submenu,
-    create_tools_submenu
+    create_gsma_submenu,
+    create_first_line_submenu,
+    create_tools_submenu,
+    create_hybris_menu
 )
 
 MENU_ACTIONS = {
-    "📅 график смен": {
-        "text": "Выберите вариант:",
-        "keyboard": create_schedule_submenu
+    "📊 график гсмаицп": {
+        "text": "График ГСМАиЦП:",
+        "keyboard": create_gsma_submenu
     },
-    "👤 мои смены": {
-        "text": "Ваши смены:",
-        "keyboard": create_my_shifts_submenu
+    "📈 график 1л": {
+        "text": "График 1 линии:",
+        "keyboard": create_first_line_submenu
+    },
+    "📋 график hybris": {
+        "text": "График эскалаций Hybris:",
+        "keyboard": create_hybris_menu
     },
     "🛠 инструменты": {
         "text": "Инструменты:",

@@ -54,24 +54,34 @@ def handle_message(bot, message):
 
     # Обработка основных команд
     text_lower = text.lower()
-    if text_lower == "сегодня":
-        from .schedule_handlers import handle_today
-        handle_today(bot, message)
-    elif text_lower == "завтра":
-        from .schedule_handlers import handle_tomorrow
-        handle_tomorrow(bot, message)
-    elif text_lower == "все мои смены":
-        from .shift_handlers import show_user_shifts
-        show_user_shifts(bot, chat_id)
-    elif text_lower == "следующая смена":
-        from .shift_handlers import show_next_shift
-        show_next_shift(bot, chat_id)
-    elif text_lower == "моя статистика":
-        from .shift_handlers import show_statistics
-        show_statistics(bot, chat_id)
-    elif text_lower == "выбрать дату":
-        from .schedule_handlers import request_date
-        request_date(bot, chat_id)
+    
+    # ГСМАиЦП команды
+    if text_lower == "сегодня гсма":
+        from .schedule_handlers import handle_gsma_today
+        handle_gsma_today(bot, message)
+    elif text_lower == "завтра гсма":
+        from .schedule_handlers import handle_gsma_tomorrow
+        handle_gsma_tomorrow(bot, message)
+    elif text_lower == "выбрать дату гсма":
+        from .schedule_handlers import request_gsma_date
+        request_gsma_date(bot, chat_id)
+    
+    # 1 линия команды
+    elif text_lower == "сегодня 1л":
+        from .first_line_handlers import handle_first_line_today
+        handle_first_line_today(bot, message)
+    elif text_lower == "завтра 1л":
+        from .first_line_handlers import handle_first_line_tomorrow
+        handle_first_line_tomorrow(bot, message)
+    elif text_lower == "выбрать дату 1л":
+        from .first_line_handlers import request_first_line_date
+        request_first_line_date(bot, chat_id)
+    
+    # Hybris команды
+    elif text_lower == "текущая неделя hybris":
+        from .hybris_handlers import show_current_hybris_week
+        show_current_hybris_week(bot, chat_id)
+    
     else:
         logger.warning(f"Unknown command: '{text}'")
         bot.send_message(
