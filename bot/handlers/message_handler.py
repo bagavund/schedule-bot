@@ -77,6 +77,17 @@ def handle_message(bot, message):
         from .first_line_handlers import request_first_line_date
         request_first_line_date(bot, chat_id)
     
+    # 2 линия команды
+    elif text_lower == "сегодня 2л":
+        from .second_line_handlers import handle_second_line_today
+        handle_second_line_today(bot, message)
+    elif text_lower == "завтра 2л":
+        from .second_line_handlers import handle_second_line_tomorrow
+        handle_second_line_tomorrow(bot, message)
+    elif text_lower == "выбрать дату 2л":
+        from .second_line_handlers import request_second_line_date
+        request_second_line_date(bot, chat_id)
+    
     # Hybris команды
     elif text_lower == "текущая неделя hybris":
         from .hybris_handlers import show_current_hybris_week
