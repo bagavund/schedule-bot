@@ -3,7 +3,7 @@ from datetime import datetime
 import logging
 from bot.services import storage
 from bot.utils import log_action, send_formatted_message, send_error_message
-from bot.keyboards import create_main_menu
+from bot.keyboards import create_main_menu, create_hybris_menu
 
 # Добавляем логгер
 logger = logging.getLogger(__name__)
@@ -27,16 +27,16 @@ def show_hybris_schedule(bot, chat_id):
             first_esc = row["Первая эскалация"] if pd.notna(row["Первая эскалация"]) else "—"
             second_esc = row["Вторая эскалация"] if pd.notna(row["Вторая эскалация"]) else "—"
             
-            lines.append(f"│ <b>📅 Неделя</b>: {week}")
-            lines.append(f"│ <b>👑 1-я эскалация</b>: {first_esc}")
-            lines.append(f"│ <b>🔹 2-я эскалация</b>: {second_esc}")
+            lines.append(f"│ <b>Неделя</b>: {week}")
+            lines.append(f"│ <b>1-я эскалация</b>: {first_esc}")
+            lines.append(f"│ <b>2-я эскалация</b>: {second_esc}")
             lines.append("├─────────────────────────────")
         
         send_formatted_message(
             bot,
             chat_id,
-            "📊 График эскалаций Hybris",
-            lines[:-1]  # Убираем последний разделитель
+            "График эскалаций Hybris",
+            lines[:-1]
         )
         
     except Exception as e:
@@ -71,7 +71,6 @@ def show_current_hybris_week(bot, chat_id):
                 start_str = str(week_range).split(" - ")[0]
                 try:
                     start_date = datetime.strptime(start_str.split()[0], "%d.%m")
-                    # Устанавливаем текущий год для сравнения
                     start_date = start_date.replace(year=current_date.year)
                     
                     if start_date <= current_date:
@@ -92,15 +91,15 @@ def show_current_hybris_week(bot, chat_id):
         second_esc = current_week["Вторая эскалация"] if pd.notna(current_week["Вторая эскалация"]) else "—"
         
         lines = [
-            f"│ <b>📅 Неделя</b>: {week}",
-            f"│ <b>👑 1-я эскалация</b>: {first_esc}",
-            f"│ <b>🔹 2-я эскалация</b>: {second_esc}"
+            f"│ <b>Неделя</b>: {week}",
+            f"│ <b>1-я эскалация</b>: {first_esc}",
+            f"│ <b>2-я эскалация</b>: {second_esc}"
         ]
         
         send_formatted_message(
             bot,
             chat_id,
-            "📊 Текущая неделя Hybris",
+            "Текущая неделя Hybris",
             lines
         )
         
@@ -113,10 +112,27 @@ def show_current_hybris_week(bot, chat_id):
             reply_markup=create_main_menu()
         )
 
+@log_action("Hybris contacts viewed")
+def show_hybris_contacts(bot, chat_id):
+    """Показывает контакты Hybris"""
+    contacts_text = (
+        "<b>Контакты Hybris:</b>\n\n"
+        "Парфенов Глеб (системный администратор), +79601055391\n\n"
+        "Кузовлева Светлана (аналитик поддержки), +79056441865\n\n"
+        "Чупринский Михаил (аналитик поддержки), +79950395294\n\n"
+        "Соболев Валерий (менеджер проекта), +79102851743"
+    )
+
+    bot.send_message(
+        chat_id,
+        contacts_text,
+        parse_mode="HTML",
+        reply_markup=create_hybris_menu()
+    )
+
 def load_hybris_schedule():
     """Загружает график Hybris из Excel"""
     try:
-        # Исправляем путь к файлу - используем Config из storage
         from config import Config
         df = pd.read_excel(Config.SCHEDULE_FILE, sheet_name="Hybris")
         return df

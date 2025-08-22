@@ -1,4 +1,3 @@
-# Объединенные правила из master и develop
 .env
 venv/
 .venv/

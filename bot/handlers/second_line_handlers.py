@@ -26,7 +26,7 @@ def show_second_line_schedule(bot, chat_id, date):
             send_formatted_message(
                 bot,
                 chat_id,
-                f"📉 2 линия на {date.strftime('%d.%m.%Y')}",
+                f" 2 линия на {date.strftime('%d.%m.%Y')}",
                 format_second_line_schedule(schedule_data),
                 reply_markup=create_main_menu()
             )
