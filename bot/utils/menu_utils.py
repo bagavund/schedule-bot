@@ -8,15 +8,15 @@ from bot.keyboards import (
 )
 
 MENU_ACTIONS = {
-    "📊 график гсмаицп": {
+    "🚨 график гсмаицп": {
         "text": "График ГСМАиЦП:",
         "keyboard": create_gsma_submenu
     },
-    "📈 график 1л": {
+    "📞 график 1л": {
         "text": "График 1 линии:",
         "keyboard": create_first_line_submenu
     },
-    "📉 график 2л": {
+    "👨‍💻 график 2л": {
         "text": "График 2 линии:",
         "keyboard": create_second_line_submenu
     },
@@ -35,10 +35,7 @@ MENU_ACTIONS = {
 }
 
 def handle_menu_action(bot, chat_id, text):
-    # Приводим текст к нижнему регистру для сравнения
     normalized_text = text.lower()
-    
-    # Ищем совпадение с ключами (без учета регистра)
     for key in MENU_ACTIONS.keys():
         if key.lower() == normalized_text:
             action = MENU_ACTIONS[key]

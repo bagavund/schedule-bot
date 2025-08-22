@@ -3,11 +3,11 @@ from telebot import types
 def create_main_menu():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row(
-        types.KeyboardButton("📊 График ГСМАиЦП"),
-        types.KeyboardButton("📈 График 1Л")
+        types.KeyboardButton("🚨 График ГСМАиЦП"),
+        types.KeyboardButton("📞 График 1Л")
     )
     markup.row(
-        types.KeyboardButton("📉 График 2Л"),
+        types.KeyboardButton("👨‍💻 График 2Л"),
         types.KeyboardButton("📋 График Hybris")
     )
     markup.row(
@@ -41,8 +41,10 @@ def create_tools_submenu():
     return markup
 
 def create_hybris_menu():
+    """Создает меню для графика Hybris"""
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row(types.KeyboardButton("Текущая неделя Hybris"))
+    markup.row(types.KeyboardButton("📞 Контакты Hybris"))  # Новая кнопка контактов
     markup.row(types.KeyboardButton("🔙 Назад"))
     return markup
 

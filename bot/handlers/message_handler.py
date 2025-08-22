@@ -92,6 +92,9 @@ def handle_message(bot, message):
     elif text_lower == "текущая неделя hybris":
         from .hybris_handlers import show_current_hybris_week
         show_current_hybris_week(bot, chat_id)
+    elif text_lower == "📞 контакты hybris":
+        from .hybris_handlers import show_hybris_contacts
+        show_hybris_contacts(bot, chat_id)
 
     # Добавляем обработку моих смен
     elif text_lower == "будущие смены":
