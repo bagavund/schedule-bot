@@ -56,13 +56,13 @@ def handle_message(bot, message):
     text_lower = text.lower()
     
     # ГСМАиЦП команды
-    if text_lower == "сегодня гсма":
+    if text_lower == "сегодня":
         from .schedule_handlers import handle_gsma_today
         handle_gsma_today(bot, message)
-    elif text_lower == "завтра гсма":
+    elif text_lower == "завтра":
         from .schedule_handlers import handle_gsma_tomorrow
         handle_gsma_tomorrow(bot, message)
-    elif text_lower == "выбрать дату гсма":
+    elif text_lower == "выбрать дату":
         from .schedule_handlers import request_gsma_date
         request_gsma_date(bot, chat_id)
     
@@ -92,6 +92,11 @@ def handle_message(bot, message):
     elif text_lower == "текущая неделя hybris":
         from .hybris_handlers import show_current_hybris_week
         show_current_hybris_week(bot, chat_id)
+
+    # Добавляем обработку моих смен
+    elif text_lower == "будущие смены":
+        from .shift_handlers import show_user_shifts
+        show_user_shifts(bot, chat_id)
     
     else:
         logger.warning(f"Unknown command: '{text}'")

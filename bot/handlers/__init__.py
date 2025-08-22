@@ -19,3 +19,4 @@ from .second_line_handlers import (
     request_second_line_date,
     show_second_line_schedule
 )
+from .shift_handlers import show_user_shifts

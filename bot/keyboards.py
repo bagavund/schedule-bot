@@ -11,14 +11,15 @@ def create_main_menu():
         types.KeyboardButton("📋 График Hybris")
     )
     markup.row(
+        types.KeyboardButton("👤 Мои смены"),
         types.KeyboardButton("🛠 Инструменты")
     )
     return markup
 
 def create_gsma_submenu():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-    markup.row(types.KeyboardButton("Сегодня ГСМА"), types.KeyboardButton("Завтра ГСМА"))
-    markup.row(types.KeyboardButton("Выбрать дату ГСМА"), types.KeyboardButton("🔙 Назад"))
+    markup.row(types.KeyboardButton("Сегодня"), types.KeyboardButton("Завтра"))
+    markup.row(types.KeyboardButton("Выбрать дату"), types.KeyboardButton("🔙 Назад"))
     return markup
 
 def create_first_line_submenu():
@@ -42,5 +43,11 @@ def create_tools_submenu():
 def create_hybris_menu():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row(types.KeyboardButton("Текущая неделя Hybris"))
+    markup.row(types.KeyboardButton("🔙 Назад"))
+    return markup
+
+def create_my_shifts_submenu():
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    markup.row(types.KeyboardButton("Будущие смены"))
     markup.row(types.KeyboardButton("🔙 Назад"))
     return markup

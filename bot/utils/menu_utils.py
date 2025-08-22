@@ -2,6 +2,7 @@ from bot.keyboards import (
     create_gsma_submenu,
     create_first_line_submenu,
     create_second_line_submenu,
+    create_my_shifts_submenu,
     create_tools_submenu,
     create_hybris_menu
 )
@@ -18,6 +19,10 @@ MENU_ACTIONS = {
     "📉 график 2л": {
         "text": "График 2 линии:",
         "keyboard": create_second_line_submenu
+    },
+    "👤 мои смены": {
+        "text": "Мои смены:",
+        "keyboard": create_my_shifts_submenu
     },
     "📋 график hybris": {
         "text": "График эскалаций Hybris:",
