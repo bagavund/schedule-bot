@@ -54,24 +54,53 @@ def handle_message(bot, message):
 
     # Обработка основных команд
     text_lower = text.lower()
+    
+    # ГСМАиЦП команды
     if text_lower == "сегодня":
-        from .schedule_handlers import handle_today
-        handle_today(bot, message)
+        from .schedule_handlers import handle_gsma_today
+        handle_gsma_today(bot, message)
     elif text_lower == "завтра":
-        from .schedule_handlers import handle_tomorrow
-        handle_tomorrow(bot, message)
-    elif text_lower == "все мои смены":
+        from .schedule_handlers import handle_gsma_tomorrow
+        handle_gsma_tomorrow(bot, message)
+    elif text_lower == "выбрать дату":
+        from .schedule_handlers import request_gsma_date
+        request_gsma_date(bot, chat_id)
+    
+    # 1 линия команды
+    elif text_lower == "сегодня 1л":
+        from .first_line_handlers import handle_first_line_today
+        handle_first_line_today(bot, message)
+    elif text_lower == "завтра 1л":
+        from .first_line_handlers import handle_first_line_tomorrow
+        handle_first_line_tomorrow(bot, message)
+    elif text_lower == "выбрать дату 1л":
+        from .first_line_handlers import request_first_line_date
+        request_first_line_date(bot, chat_id)
+    
+    # 2 линия команды
+    elif text_lower == "сегодня 2л":
+        from .second_line_handlers import handle_second_line_today
+        handle_second_line_today(bot, message)
+    elif text_lower == "завтра 2л":
+        from .second_line_handlers import handle_second_line_tomorrow
+        handle_second_line_tomorrow(bot, message)
+    elif text_lower == "выбрать дату 2л":
+        from .second_line_handlers import request_second_line_date
+        request_second_line_date(bot, chat_id)
+    
+    # Hybris команды
+    elif text_lower == "текущая неделя hybris":
+        from .hybris_handlers import show_current_hybris_week
+        show_current_hybris_week(bot, chat_id)
+    elif text_lower == "📞 контакты hybris":
+        from .hybris_handlers import show_hybris_contacts
+        show_hybris_contacts(bot, chat_id)
+
+    # Добавляем обработку моих смен
+    elif text_lower == "будущие смены":
         from .shift_handlers import show_user_shifts
         show_user_shifts(bot, chat_id)
-    elif text_lower == "следующая смена":
-        from .shift_handlers import show_next_shift
-        show_next_shift(bot, chat_id)
-    elif text_lower == "моя статистика":
-        from .shift_handlers import show_statistics
-        show_statistics(bot, chat_id)
-    elif text_lower == "выбрать дату":
-        from .schedule_handlers import request_date
-        request_date(bot, chat_id)
+    
     else:
         logger.warning(f"Unknown command: '{text}'")
         bot.send_message(

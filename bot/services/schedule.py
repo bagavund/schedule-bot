@@ -45,14 +45,16 @@ def format_schedule(row):
 
 
 def get_user_shifts(df, user_name, only_future=True):
+    """Находит смены пользователя в DataFrame"""
     today = datetime.now().date()
 
     mask = (
-    (df["Основа"] == user_name)
-    | (df["Администрирование"] == user_name)
-    | (df["Ночь"] == user_name)
-    | (df["Руководитель"] == user_name) 
-)
+        (df["Основа"] == user_name) |
+        (df["Администрирование"] == user_name) |
+        (df["Ночь"] == user_name) |
+        (df["Руководитель"] == user_name) |
+        (df["Резерв"] == user_name)
+    )
 
     user_shifts = df[mask].copy()
 

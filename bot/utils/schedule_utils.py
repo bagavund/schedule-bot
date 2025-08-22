@@ -1,7 +1,7 @@
 from datetime import datetime
 from functools import wraps
 import logging
-from typing import Callable, Any  # Добавлен импорт типов
+from typing import Callable, Any
 
 from bot.services import storage
 from bot.utils.core_utils import send_error_message
@@ -21,12 +21,30 @@ def parse_date(date_str: str) -> datetime.date:
 def with_schedule(func: Callable) -> Callable:
     """Декоратор для загрузки расписания"""
     @wraps(func)
-    def wrapper(bot: Any, *args, **kwargs) -> Any:
+    def wrapper(*args, **kwargs) -> Any:
         try:
             df = storage.load_schedule()
             if df is None:
-                chat_id = args[0].chat.id if hasattr(args[0], 'chat') else kwargs.get('chat_id')
-                if chat_id:
+                # Ищем chat_id в аргументах
+                chat_id = None
+                bot = None
+                
+                # Ищем bot и chat_id в аргументах
+                for arg in args:
+                    if hasattr(arg, 'send_message'):
+                        bot = arg
+                    if hasattr(arg, 'chat') and hasattr(arg.chat, 'id'):
+                        chat_id = arg.chat.id
+                        break
+                    if isinstance(arg, int):
+                        chat_id = arg
+                
+                if not chat_id:
+                    chat_id = kwargs.get('chat_id')
+                if not bot:
+                    bot = kwargs.get('bot')
+                
+                if chat_id and bot:
                     send_error_message(
                         bot,
                         chat_id,
@@ -35,11 +53,31 @@ def with_schedule(func: Callable) -> Callable:
                     )
                 logger.error("Failed to load schedule")
                 return
-            return func(bot, df, *args, **kwargs)
+            
+            # Передаем df как именованный параметр
+            return func(*args, df=df, **kwargs)
+            
         except Exception as e:
             logger.error(f"Error in with_schedule: {e}", exc_info=True)
-            chat_id = args[0].chat.id if hasattr(args[0], 'chat') else kwargs.get('chat_id')
-            if chat_id:
+            # Ищем chat_id в аргументах
+            chat_id = None
+            bot = None
+            
+            for arg in args:
+                if hasattr(arg, 'send_message'):
+                    bot = arg
+                if hasattr(arg, 'chat') and hasattr(arg.chat, 'id'):
+                    chat_id = arg.chat.id
+                    break
+                if isinstance(arg, int):
+                    chat_id = arg
+            
+            if not chat_id:
+                chat_id = kwargs.get('chat_id')
+            if not bot:
+                bot = kwargs.get('bot')
+            
+            if chat_id and bot:
                 send_error_message(
                     bot,
                     chat_id,
