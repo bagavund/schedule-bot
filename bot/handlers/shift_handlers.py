@@ -61,20 +61,9 @@ def show_user_shifts(bot, chat_id):
             send_error_message(bot, chat_id, "❌ Вы не авторизованы")
             return
         
-<<<<<<< HEAD
-        if pd.notna(row.get("Основа")) and row["Основа"] == user_name:
-            lines.append(f"│ <b>👨‍💻 Основная</b>:     {date_str} ({weekday_ru})")
-        if pd.notna(row.get("Администрирование")) and row["Администрирование"] == user_name:
-            lines.append(f"│ <b>💻 Админ</b>:        {date_str} ({weekday_ru})")
-        if pd.notna(row.get("Ночь")) and row["Ночь"] == user_name:
-            lines.append(f"│ <b>🌙 Ночь</b>:         {date_str} ({weekday_ru})")
-    
-    send_formatted_message(bot, chat_id, "📅 Ваши ближайшие смены:", lines)
-=======
         from config import Config
         today = datetime.now().date()
         all_shifts = []
->>>>>>> features/1line
 
         # Сначала проверяем 1 линию
         try:
@@ -108,22 +97,6 @@ def show_user_shifts(bot, chat_id):
             send_formatted_message(bot, chat_id, f"📅 Будущие смены ({user_name}):", lines)
             return
 
-<<<<<<< HEAD
-    lines = []
-    # Проверка смен пользователя
-    shift_checks = [
-        ('Основа', '👨‍💻 Основная'),
-        ('Ночь', '🌙 Ночь'),
-        ('Администрирование', '💻 Администрирование'),
-        ('Руководитель', '👑 Руководитель'),
-        ('Резерв', '🔄 Резерв'),
-        ('Отпуск', '🏖 Отпуск')
-    ]
-    
-    for col, emoji in shift_checks:
-        if pd.notna(next_shift.get(col)) and next_shift[col] == user_name:
-            lines.append(f"│ {emoji}: {user_name}")
-=======
         # Если в 1 линии не нашли, проверяем 2 линию
         try:
             df_second = pd.read_excel(Config.SCHEDULE_FILE, sheet_name="2 линия")
@@ -142,7 +115,6 @@ def show_user_shifts(bot, chat_id):
                     })
         except Exception as e:
             print(f"Ошибка загрузки 2 линии: {e}")
->>>>>>> features/1line
 
         # Если нашли смены во 2 линии, НЕ проверяем ГСМАиЦП
         if all_shifts:
@@ -157,69 +129,6 @@ def show_user_shifts(bot, chat_id):
             send_formatted_message(bot, chat_id, f"📅 Будущие смены ({user_name}):", lines)
             return
 
-<<<<<<< HEAD
-    # Дополнительная информация о смене
-    additional_checks = [
-        ('Администрирование', '💻 Админ'),
-        ('Руководитель', '👑 Руководитель'),
-        ('Резерв', '🔄 Резерв'),
-        ('Отпуск', '🏖 Отпуск')
-    ]
-    
-    for col, emoji in additional_checks:
-        if pd.notna(next_shift.get(col)) and next_shift[col] != user_name:
-            lines.append(f"│ {emoji}: {next_shift[col]}")
-
-    send_formatted_message(
-        bot,
-        chat_id,
-        f"⬇️ Ваша следующая смена:",
-        [f"│ 📅 {date_str} ({weekday_ru})"] + lines
-    )
-
-@log_action("Statistics requested")
-@with_schedule
-def show_statistics(bot, df, chat_id):
-    user_name = auth.get_user_name(chat_id)
-    past_shifts = df[df["Дата"] < datetime.now().date()]
-
-    stats = {
-        "Основная": {"hours": 0, "count": 0},
-        "Ночь": {"hours": 0, "count": 0},
-        "Администрирование": {"hours": 0, "count": 0},
-        "Резерв": {"hours": 0, "count": 0},
-    }
-
-    for _, row in past_shifts.iterrows():
-        if pd.notna(row.get("Основа")) and row["Основа"] == user_name:
-            stats["Основная"]["hours"] += 12
-            stats["Основная"]["count"] += 1
-        if pd.notna(row.get("Ночь")) and row["Ночь"] == user_name:
-            stats["Ночь"]["hours"] += 12
-            stats["Ночь"]["count"] += 1
-        if pd.notna(row.get("Администрирование")) and row["Администрирование"] == user_name:
-            stats["Администрирование"]["hours"] += 9
-            stats["Администрирование"]["count"] += 1
-        if pd.notna(row.get("Резерв")) and row["Резерв"] == user_name:
-            stats["Резерв"]["hours"] += 9
-            stats["Резерв"]["count"] += 1
-
-    total_hours = sum(v["hours"] for v in stats.values())
-
-    if total_hours == 0:
-        return send_formatted_message(bot, chat_id, "📭 У вас нет данных по отработанным сменам", [])
-
-    lines = [
-        f"│ <b>🕒 Всего часов</b>:     <b>{total_hours}</b>",
-        "├─────────────────────────────",
-        f"│ <b>🔹 Основные смены</b>:  {stats['Основная']['hours']} ч ({stats['Основная']['count']} смен)",
-        f"│ <b>🌙 Ночные смены</b>:    {stats['Ночь']['hours']} ч ({stats['Ночь']['count']} смен)",
-        f"│ <b>🖥 Администрирование</b>: {stats['Администрирование']['hours']} ч ({stats['Администрирование']['count']} смен)",
-        f"│ <b>🔄 Резерв</b>:          {stats['Резерв']['hours']} ч ({stats['Резерв']['count']} смен)"
-    ]
-
-    send_formatted_message(bot, chat_id, f"📊 Статистика {user_name}", lines)
-=======
         # Если не нашли в 1 и 2 линиях, проверяем ГСМАиЦП
         try:
             df_gsma = pd.read_excel(Config.SCHEDULE_FILE, sheet_name="ГСМАиЦП")
@@ -256,4 +165,3 @@ def show_statistics(bot, df, chat_id):
     except Exception as e:
         print(f"Общая ошибка: {e}")
         send_error_message(bot, chat_id, "❌ Ошибка при загрузке смен")
->>>>>>> features/1line
