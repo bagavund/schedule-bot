@@ -1,6 +1,6 @@
 from bot.services import auth
 from bot.services.user_logging import user_activity_logger
-from bot.keyboards import create_main_menu
+from bot.keyboards import create_main_menu, create_tools_submenu
 from bot.utils.menu_utils import handle_menu_action
 from bot.utils import (
     log_action,
@@ -96,10 +96,14 @@ def handle_message(bot, message):
         from .hybris_handlers import show_hybris_contacts
         show_hybris_contacts(bot, chat_id)
 
-    # Добавляем обработку моих смен
+    # Мои смены
     elif text_lower == "будущие смены":
         from .shift_handlers import show_user_shifts
         show_user_shifts(bot, chat_id)
+    
+    # Поддержка проекта
+    elif text_lower == "💝 поддержать проект":
+        show_support_info(bot, chat_id)
     
     else:
         logger.warning(f"Unknown command: '{text}'")
@@ -108,3 +112,31 @@ def handle_message(bot, message):
             "Неизвестная команда. Используйте меню для навигации.",
             reply_markup=create_main_menu()
         )
+
+def show_support_info(bot, chat_id):
+    """Показывает информацию о поддержке проекта"""
+    support_text = (
+        "💝 <b>Поддержать проект</b>\n\n"
+        "Если бот полезен для вас, вы можете поддержать его развитие!\n\n"
+        "💰 <b>Через TBank (карты):</b>\n"
+        "<a href='https://www.tbank.ru/cf/3GKvqCUDmx8'>https://www.tbank.ru/cf/3GKvqCUDmx8</a>\n\n"
+        "💎 <b>TON кошелек:</b>\n"
+        "<code>UQDLZF19n_Ba17Ch1BN74iu1hJZqxMr_0vKjVlKW1c0jvkaK</code>\n\n"
+        "Спасибо за вашу поддержку! 🙏"
+    )
+    
+    # Создаем inline-кнопки
+    from telebot import types
+    markup = types.InlineKeyboardMarkup()
+    markup.row(
+        types.InlineKeyboardButton("💳 Перейти в TBank", url="https://www.tbank.ru/cf/3GKvqCUDmx8"),
+        types.InlineKeyboardButton("💎 Скопировать TON", callback_data="copy_ton")
+    )
+    
+    bot.send_message(
+        chat_id,
+        support_text,
+        parse_mode="HTML",
+        reply_markup=markup,
+        disable_web_page_preview=True
+    )

@@ -12,7 +12,7 @@ def create_main_menu():
     )
     markup.row(
         types.KeyboardButton("👤 Мои смены"),
-        types.KeyboardButton("🛠 Инструменты")
+        types.KeyboardButton("📌 Прочее")
     )
     return markup
 
@@ -37,14 +37,14 @@ def create_second_line_submenu():
 def create_tools_submenu():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row(types.KeyboardButton("Сменить пользователя"))
+    markup.row(types.KeyboardButton("💝 Поддержать проект"))
     markup.row(types.KeyboardButton("🔙 Назад"))
     return markup
 
 def create_hybris_menu():
-    """Создает меню для графика Hybris"""
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.row(types.KeyboardButton("Текущая неделя Hybris"))
-    markup.row(types.KeyboardButton("📞 Контакты Hybris"))  # Новая кнопка контактов
+    markup.row(types.KeyboardButton("📞 Контакты Hybris"))
     markup.row(types.KeyboardButton("🔙 Назад"))
     return markup
 
