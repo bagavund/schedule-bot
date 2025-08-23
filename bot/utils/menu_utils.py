@@ -28,8 +28,8 @@ MENU_ACTIONS = {
         "text": "График эскалаций Hybris:",
         "keyboard": create_hybris_menu
     },
-    "🛠 инструменты": {
-        "text": "Инструменты:",
+    "📌 прочее": {
+        "text": "Прочее:",
         "keyboard": create_tools_submenu
     }
 }
