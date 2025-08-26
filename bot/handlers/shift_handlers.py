@@ -28,6 +28,8 @@ def get_shift_type(row, user_name, sheet_name):
             return "👑 Руководитель"
         elif row.get("Резерв") == user_name:
             return "🔄 Резерв"
+        elif row.get("Ведущий специалист") == user_name:
+            return "⭐ Ведущий"
     
     elif sheet_name == "1 Линия":
         if pd.notna(row.get("Дневное дежурство")) and user_name in str(row.get("Дневное дежурство", "")):

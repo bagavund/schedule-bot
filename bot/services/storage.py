@@ -5,7 +5,7 @@ from config import Config
 
 logger = logging.getLogger(__name__)
 
-@lru_cache(maxsize=2)  # Увеличиваем кэш для двух листов
+@lru_cache(maxsize=2)
 def load_schedule(sheet_name="ГСМАиЦП"):
     """Загружает расписание с указанного листа"""
     try:
@@ -13,9 +13,7 @@ def load_schedule(sheet_name="ГСМАиЦП"):
         
         if sheet_name == "ГСМАиЦП":
             df["Дата"] = pd.to_datetime(df["Дата"]).dt.date
-            
-            # Добавляем отсутствующие колонки
-            for col in ["Резерв", "Руководитель"]:
+            for col in ["Резерв", "Руководитель", "Ведущий специалист"]: 
                 if col not in df.columns:
                     df[col] = pd.NA
         
