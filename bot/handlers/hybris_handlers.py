@@ -114,7 +114,6 @@ def show_current_hybris_week(bot, chat_id):
 
 @log_action("Hybris contacts viewed")
 def show_hybris_contacts(bot, chat_id):
-    """Показывает контакты Hybris"""
     contacts_text = (
         "<b>Контакты Hybris:</b>\n\n"
         "Парфенов Глеб (системный администратор), +79601055391\n\n"
