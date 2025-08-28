@@ -16,28 +16,24 @@ def handle_message(bot, message):
     chat_id = message.chat.id
     text = message.text.strip()
     user_name = auth.get_user_name(chat_id) or "Unauthorized"
-    
-    # Логирование
-    logger.debug(f"Message from {user_name} (ID: {chat_id}): '{text}'")
-    user_activity_logger.log_activity(
-        user_id=chat_id,
-        username=user_name,
-        action="Message received",
-        details=f"Text: {text[:100]}"
-    )
 
     # Обработка смены пользователя
     if text.lower() == "сменить пользователя":
-        auth.deauthorize_user(chat_id)
-        from .auth_handlers import request_auth
-        request_auth(bot, chat_id)
+        if auth.is_admin_user(chat_id):
+            from .auth_handlers import request_switch_user
+            request_switch_user(bot, chat_id)
+        else:
+            auth.deauthorize_user(chat_id)
+            from .auth_handlers import request_auth
+            request_auth(bot, chat_id)
         return
 
-    # Проверка авторизации
+    # Проверка авторизации (ОСТАЛОСЬ БЕЗ ИЗМЕНЕНИЙ)
     if not auth.is_authorized(chat_id):
         from .auth_handlers import request_auth
         request_auth(bot, chat_id)
         return
+
 
     # Обработка кнопки "Назад"
     if text == "🔙 Назад":

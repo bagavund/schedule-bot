@@ -1,7 +1,6 @@
-from typing import List, Callable, Any 
+from typing import List, Callable, Any  # ← Добавить импорт
 from telebot import types
-from bot.services.user_logging import user_activity_logger
-from bot.services import auth
+from bot.services.auth import get_user_name  # ← Прямой импорт
 
 def get_chat_id_from_args(*args, **kwargs) -> int:
     """Извлекает chat_id из аргументов функции"""
@@ -15,7 +14,7 @@ def log_action(action_name: str) -> Callable:
     def decorator(func: Callable) -> Callable:
         def wrapper(*args, **kwargs) -> Any:
             chat_id = get_chat_id_from_args(*args, **kwargs)
-            user_name = auth.get_user_name(chat_id) if chat_id else "Unknown"
+            user_name = get_user_name(chat_id) if chat_id else "Unknown"
             
             details = ""
             for arg in args:
@@ -23,6 +22,7 @@ def log_action(action_name: str) -> Callable:
                     details = f"Text: {arg.text[:100]}"
                     break
             
+            from bot.services.user_logging import user_activity_logger
             user_activity_logger.log_activity(
                 user_id=chat_id,
                 username=user_name,

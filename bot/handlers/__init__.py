@@ -1,4 +1,9 @@
-from .auth_handlers import request_auth, process_auth_step
+from .auth_handlers import (
+    request_auth, 
+    process_auth_step,
+    request_switch_user,  # Добавьте эту строку
+    process_switch_user   # Добавьте эту строку
+)
 from .message_handler import handle_message
 from .schedule_handlers import (
     handle_gsma_today, 
