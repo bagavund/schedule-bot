@@ -1,8 +1,8 @@
 from .auth_handlers import (
     request_auth, 
     process_auth_step,
-    request_switch_user,  # Добавьте эту строку
-    process_switch_user   # Добавьте эту строку
+    request_switch_user,
+    process_switch_user
 )
 from .message_handler import handle_message
 from .schedule_handlers import (
@@ -25,3 +25,28 @@ from .second_line_handlers import (
     show_second_line_schedule
 )
 from .shift_handlers import show_user_shifts
+from .broadcast_handlers import handle_broadcast  # ← Добавить эту строку
+
+__all__ = [
+    "request_auth",
+    "process_auth_step", 
+    "request_switch_user",
+    "process_switch_user",
+    "handle_message",
+    "handle_gsma_today",
+    "handle_gsma_tomorrow",
+    "request_gsma_date",
+    "process_gsma_date_input",
+    "show_hybris_schedule", 
+    "show_current_hybris_week",
+    "handle_first_line_today",
+    "handle_first_line_tomorrow",
+    "request_first_line_date",
+    "show_first_line_schedule",
+    "handle_second_line_today",
+    "handle_second_line_tomorrow", 
+    "request_second_line_date",
+    "show_second_line_schedule",
+    "show_user_shifts",
+    "handle_broadcast" 
+]

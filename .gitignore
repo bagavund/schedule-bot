@@ -4,6 +4,5 @@ venv/
 ENV/
 data/logs/
 data/user_states.json
-bot_runtime.log
+data/allowed_users.txt
 **/__pycache__/
-**/*.py[cod]

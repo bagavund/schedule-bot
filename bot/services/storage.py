@@ -9,10 +9,11 @@ logger = logging.getLogger(__name__)
 def load_schedule(sheet_name="ГСМАиЦП"):
     """Загружает расписание с указанного листа"""
     try:
+        from config import Config
         df = pd.read_excel(Config.SCHEDULE_FILE, sheet_name=sheet_name)
         
         if sheet_name == "ГСМАиЦП":
-            df["Дата"] = pd.to_datetime(df["Дата"]).dt.date
+            df["Дата"] = pd.to_datetime(df["Дата"], dayfirst=True).dt.date
             for col in ["Резерв", "Руководитель", "Ведущий специалист"]: 
                 if col not in df.columns:
                     df[col] = pd.NA
@@ -70,8 +71,6 @@ def load_allowed_users_legacy():
                 line = line.strip()
                 if not line:
                     continue
-                
-                # Старый формат: ФИО:ID или просто ФИО
                 if ':' in line:
                     name, telegram_id = line.split(':', 1)
                     allowed_users[name.strip()] = telegram_id.strip()

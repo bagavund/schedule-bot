@@ -1,7 +1,7 @@
 from .auth import (
     is_authorized, 
-    authorize_user_by_username,  # ← Изменено с authorize_user
-    authorize_user_legacy,       # ← Добавлено для обратной совместимости
+    authorize_user_by_username,
+    authorize_user_legacy,  
     get_user_name, 
     deauthorize_user,
     is_admin_user,
@@ -15,12 +15,12 @@ from .schedule import (
     WEEKDAYS,
     SHIFT_DURATIONS,
 )
-from .storage import load_schedule, load_allowed_users, load_allowed_users_fallback  # ← Добавлены новые функции
+from .storage import load_schedule, load_allowed_users, load_allowed_users_fallback 
 
 __all__ = [
     "is_authorized",
-    "authorize_user_by_username",  # ← Изменено
-    "authorize_user_legacy",       # ← Добавлено
+    "authorize_user_by_username",
+    "authorize_user_legacy",
     "get_user_name",
     "deauthorize_user",
     "is_admin_user",
@@ -30,7 +30,7 @@ __all__ = [
     "get_user_shifts",
     "load_schedule",
     "load_allowed_users",
-    "load_allowed_users_fallback",  # ← Добавлено
+    "load_allowed_users_fallback",
     "WEEKDAYS",
     "SHIFT_DURATIONS",
     "user_activity_logger",

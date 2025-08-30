@@ -1,6 +1,6 @@
-from typing import List, Callable, Any  # ← Добавить импорт
+from typing import List, Callable, Any 
 from telebot import types
-from bot.services.auth import get_user_name  # ← Прямой импорт
+from bot.services.auth import get_user_name 
 
 def get_chat_id_from_args(*args, **kwargs) -> int:
     """Извлекает chat_id из аргументов функции"""
