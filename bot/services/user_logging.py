@@ -24,5 +24,4 @@ class UserActivityLogger:
             log_message += f" | Details: {details}"
         self.logger.info(log_message)
 
-# Создаем глобальный экземпляр логгера
 user_activity_logger = UserActivityLogger()

@@ -84,7 +84,7 @@ def load_second_line_schedule():
     try:
         from config import Config
         df = pd.read_excel(Config.SCHEDULE_FILE, sheet_name="2 линия")
-        df["Дата"] = pd.to_datetime(df["Дата"]).dt.date
+        df["Дата"] = pd.to_datetime(df["Дата"], dayfirst=True).dt.date
         return df
     except Exception as e:
         logger.error(f"Error loading second line schedule: {e}")

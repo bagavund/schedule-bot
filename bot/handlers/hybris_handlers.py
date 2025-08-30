@@ -5,7 +5,6 @@ from bot.services import storage
 from bot.utils import log_action, send_formatted_message, send_error_message
 from bot.keyboards import create_main_menu, create_hybris_menu
 
-# Добавляем логгер
 logger = logging.getLogger(__name__)
 
 @log_action("Hybris schedule viewed")
@@ -62,8 +61,7 @@ def show_current_hybris_week(bot, chat_id):
             )
         
         current_date = datetime.now()
-        
-        # Ищем текущую неделю
+
         current_week = None
         for _, row in df.iterrows():
             week_range = row["Неделя"]

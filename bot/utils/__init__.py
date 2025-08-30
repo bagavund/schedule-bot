@@ -5,7 +5,7 @@ from .core_utils import (
 )
 from .schedule_utils import (
     parse_date,
-    with_schedule  # Это критически важно!
+    with_schedule 
 )
 from .menu_utils import handle_menu_action
 

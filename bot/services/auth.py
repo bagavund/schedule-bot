@@ -7,14 +7,11 @@ from config import Config
 
 logger = logging.getLogger(__name__)
 
-# Пути к файлам
 DATA_DIR = Config.DATA_DIR
 USER_STATES_FILE = DATA_DIR / "user_states.json"
 
-# Создаем директорию, если не существует
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# Глобальные переменные
 user_states = {}
 ADMIN_USER = "Комлев Владислав"
 
@@ -61,24 +58,20 @@ def authorize_user_by_username(message, full_name_input):
     """Авторизация по логину Telegram и ФИО"""
     from .storage import load_allowed_users, load_allowed_users_fallback
     
-    # Получаем логин пользователя (если есть)
     username = f"@{message.from_user.username.lower()}" if message.from_user.username else None
     chat_id = str(message.chat.id)
     
     allowed_users = load_allowed_users()
     
-    # Сценарий 1: Пользователь имеет username
     if username:
-        # Проверка 1: Логин должен быть в списке разрешенных
+
         if username not in allowed_users:
             return False, f"❌ Логин {username} не найден в списке разрешенных.\n\nОбратитесь к администратору для добавления в систему."
 
-        # Проверка 2: ФИО должно совпадать с записью
         expected_full_name = allowed_users[username]
         if expected_full_name != full_name_input:
             return False, f"❌ Неверные данные. Ожидается: {expected_full_name}\n\nВведите правильные фамилию и имя:"
 
-        # Успешная авторизация
         user_info = {
             "authorized": True, 
             "name": expected_full_name,
@@ -93,21 +86,16 @@ def authorize_user_by_username(message, full_name_input):
         
         logger.info(f"User authorized by username: {expected_full_name} ({username})")
         return True, f"✅ Авторизация успешна, {expected_full_name}!"
-    
-    # Сценарий 2: Пользователь без username - используем fallback
+
     else:
         fallback_users = load_allowed_users_fallback()
         
-        # Проверка: chat_id должен быть в резервном списке
         if chat_id not in fallback_users:
             return False, "❌ У вашего аккаунта Telegram не установлен username (@логин).\n\nОбратитесь к администратору для альтернативного способа доступа."
 
-        # Проверка: ФИО должно совпадать
         expected_full_name = fallback_users[chat_id]
         if expected_full_name != full_name_input:
             return False, f"❌ Неверные данные. Ожидается: {expected_full_name}\n\nВведите правильные фамилию и имя:"
-
-        # Успешная авторизация через fallback
         user_info = {
             "authorized": True, 
             "name": expected_full_name,
@@ -127,9 +115,8 @@ def authorize_user_legacy(chat_id, full_name_input):
     """Функция для имперсонации администратора - работает с новым форматом"""
     from .storage import load_allowed_users
     
-    allowed_users = load_allowed_users()  # Новый формат: @логин:ФИО
+    allowed_users = load_allowed_users()
     
-    # Ищем ФИО в значениях (в новом формате значения - это ФИО)
     found = False
     expected_full_name = None
     
@@ -142,7 +129,6 @@ def authorize_user_legacy(chat_id, full_name_input):
     if not found:
         return False, "❌ Неверные данные. Пользователь не найден в списке разрешенных."
 
-    # Для администратора пропускаем дополнительные проверки
     current_user_info = get_current_user(chat_id)
     is_currently_admin = current_user_info.get("name") == ADMIN_USER or current_user_info.get("original_name") == ADMIN_USER
 
@@ -166,7 +152,6 @@ def deauthorize_user(chat_id):
     """Деавторизует пользователя"""
     chat_id = str(chat_id)
     if chat_id in user_states:
-        # Если это была имперсонация администратора, возвращаем к оригинальному пользователю
         user_info = user_states[chat_id]
         if user_info.get("is_impersonating") and user_info.get("original_name") == ADMIN_USER:
             user_states[chat_id] = {
