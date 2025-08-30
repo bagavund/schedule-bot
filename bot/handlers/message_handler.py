@@ -17,25 +17,26 @@ def handle_message(bot, message):
     text = message.text.strip()
     user_name = auth.get_user_name(chat_id) or "Unauthorized"
 
-    # Обработка смены пользователя
     if text.lower() == "сменить пользователя":
         if auth.is_admin_user(chat_id):
-            from .auth_handlers import request_switch_user
+            from .auth_handlers import request_switch_user 
             request_switch_user(bot, chat_id)
         else:
             auth.deauthorize_user(chat_id)
-            from .auth_handlers import request_auth
+            from .auth_handlers import request_auth 
             request_auth(bot, chat_id)
         return
 
-    # Проверка авторизации (ОСТАЛОСЬ БЕЗ ИЗМЕНЕНИЙ)
+    if not auth.is_authorized(chat_id):
+        from .auth_handlers import request_auth 
+        request_auth(bot, chat_id)
+        return
+
     if not auth.is_authorized(chat_id):
         from .auth_handlers import request_auth
         request_auth(bot, chat_id)
         return
 
-
-    # Обработка кнопки "Назад"
     if text == "🔙 Назад":
         bot.send_message(
             chat_id,
@@ -44,11 +45,9 @@ def handle_message(bot, message):
         )
         return
 
-    # Обработка главного меню
     if handle_menu_action(bot, chat_id, text):
         return
 
-    # Обработка основных команд
     text_lower = text.lower()
     
     # ГСМАиЦП команды
@@ -101,6 +100,11 @@ def handle_message(bot, message):
     elif text_lower == "💝 поддержать проект":
         show_support_info(bot, chat_id)
     
+    # message_handler.py 
+    elif text.lower().startswith('/broadcast'):
+        from bot.handlers.broadcast_handlers import handle_broadcast
+        handle_broadcast(bot, message)
+    
     else:
         logger.warning(f"Unknown command: '{text}'")
         bot.send_message(
@@ -121,7 +125,6 @@ def show_support_info(bot, chat_id):
         "Спасибо за вашу поддержку! 🙏"
     )
     
-    # Создаем inline-кнопки
     from telebot import types
     markup = types.InlineKeyboardMarkup()
     markup.row(

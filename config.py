@@ -8,14 +8,11 @@ class Config:
     PROJECT_ROOT = Path(__file__).parent
     DATA_DIR = PROJECT_ROOT / "data"
     LOGS_DIR = DATA_DIR / "logs"
-    
     SCHEDULE_FILE = DATA_DIR / "расписание.xlsx"
     ALLOWED_USERS_FILE = DATA_DIR / "allowed_users.txt"
     USER_STATES_FILE = DATA_DIR / "user_states.json"
-    
-    # Добавляем оба варианта имени для совместимости
     TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-    BOT_TOKEN = TELEGRAM_TOKEN  # Алиас для обратной совместимости
+    BOT_TOKEN = TELEGRAM_TOKEN 
     
     if not TELEGRAM_TOKEN:
         raise ValueError("Токен бота не найден в .env файле")

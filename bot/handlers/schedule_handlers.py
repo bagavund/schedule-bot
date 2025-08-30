@@ -32,7 +32,6 @@ def show_schedule(bot, chat_id, date, df=None):
             reply_markup=create_main_menu()
         )
     else:
-        # Проверяем, есть ли вообще данные в расписании
         if df.empty:
             send_error_message(
                 bot,
@@ -41,7 +40,6 @@ def show_schedule(bot, chat_id, date, df=None):
                 reply_markup=create_main_menu()
             )
         else:
-            # Показываем доступный диапазон дат
             min_date = df["Дата"].min()
             max_date = df["Дата"].max()
             send_error_message(

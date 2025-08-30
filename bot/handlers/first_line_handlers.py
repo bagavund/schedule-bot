@@ -1,5 +1,5 @@
 import pandas as pd
-from datetime import datetime, timedelta  # Добавить timedelta
+from datetime import datetime, timedelta 
 import logging
 from bot.services import storage
 from bot.utils import log_action, send_formatted_message, send_error_message
@@ -84,7 +84,7 @@ def load_first_line_schedule():
     try:
         from config import Config
         df = pd.read_excel(Config.SCHEDULE_FILE, sheet_name="1 Линия")
-        df["Дата"] = pd.to_datetime(df["Дата"]).dt.date
+        df["Дата"] = pd.to_datetime(df["Дата"], dayfirst=True).dt.date
         return df
     except Exception as e:
         logger.error(f"Error loading first line schedule: {e}")

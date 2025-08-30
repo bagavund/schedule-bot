@@ -1,10 +1,18 @@
 {
   "421536952": {
     "authorized": true,
-    "name": "Комлев Владислав",
-    "username": "@namnebless",
+    "name": "Кобяков Кирилл",
     "chat_id": "421536952",
-    "authorized_at": "2025-08-29T02:09:05.522854",
+    "original_name": "Комлев Владислав",
+    "is_impersonating": true,
+    "auth_method": "admin_impersonation"
+  },
+  "7601161726": {
+    "authorized": true,
+    "name": "Тестовый",
+    "username": "@av_testoviy",
+    "chat_id": "7601161726",
+    "authorized_at": "2025-08-29T02:58:09.125172",
     "auth_method": "username"
   }
 }
